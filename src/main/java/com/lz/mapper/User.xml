@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.lz.mapper.UserMapper">
+    <insert id="add" parameterType="com.lz.entity.User">
+        insert into user (username,pwd) values (#{username},#{pwd})
+    </insert>
+
+    <select id="get" parameterType="com.lz.entity.User" resultType="com.lz.entity.User">
+        select * from user where username = #{username} and pwd = #{pwd}
+    </select>
+
+    <select id="checkName" parameterType="String" resultType="com.lz.entity.User">
+        select * from user where username = #{username}
+    </select>
+
+    <insert id="createCart" parameterType="int">
+        insert into cart (uid) values (#{uid})
+    </insert>
+
+    <select id="getUid" parameterType="String" resultType="int">
+        select uid from user where username = #{username}
+    </select>
+
+    <select id="checkCart" parameterType="int" resultType="int">
+        select count(uid) from cart where uid = #{uid}
+    </select>
+
+
+</mapper>

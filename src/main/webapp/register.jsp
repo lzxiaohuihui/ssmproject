@@ -11,26 +11,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <script src="../static/js/jquery/2.0.0/jquery.min.js"></script>
-    <link href="../static//css/bootstrap/3.3.6/bootstrap.min.css" rel="stylesheet">
-    <script src="../static//js/bootstrap/3.3.6/bootstrap.min.js"></script>
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <link href="css/bootstrap/3.3.6/bootstrap.min.css" rel="stylesheet">
+    <script src="js/bootstrap/3.3.6/bootstrap.min.js"></script>
     <title>注册天狗</title>
 
-    <style rel="stylesheet" href="../static/css/register.css"></style>
+    <link rel="stylesheet" href="css/register.css"/>
     <script>
         $(document).ready(function(){
 
             $("#userName").keyup(function(){
-                var user = {name:$("#userName").val()};
-                $.ajax(
-                    {url:"CheckNameServlet",
-                        data:user,
-                        async:true,
-                        type:"POST",
-                        dataType:"html",
-                        success:function(result){
-                            $("#tip").html(result); }
-                    });
+                var username = $("#userName").val();
+                $.post(
+                    "checkName",
+                    {"username":username},
+                    function (result) {
+                        if (result=="1")
+                            $("#tip").text("可以使用");
+                        else {
+                            $("#tip").text("不可以使用");
+                        }
+                    }
+                );
             });
         });
 
@@ -40,11 +42,11 @@
 
     <div class="login">
         <div class="title">注册会员</div>
-        <form action="RegisterServlet" method="POST">
+        <form action="registerPage" method="POST">
             <div id="tip">请输入名称</div>
-            <div>会员名：<input class="" type="text" name="name" id="userName"></div>
+            <div>会员名：<input class="form-control" autocomplete="off" type="text" name="username" id="userName"></div>
 
-            <div>登陆密码：<input class="" type="password" name="pwd" id="userPwd"></div>
+            <div>登陆密码：<input class="form-control" type="password" name="pwd" id="userPwd"></div>
 
             <input class="btn btn-block"  type="submit" id="sub" value="注册">
         </form>

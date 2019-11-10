@@ -5,17 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js" charset="utf-8"></script>
+    <link href="css/login.css" rel="stylesheet"/>
     <title>login</title>
-    <style href="../static/css/login.css" rel="stylesheet"></style>
-    
+
 </head>
 <body>
 
-    <form action="LoginServlet" method="POST">
+    <form action="loginPage" method="POST">
         <h1>Login</h1>
 
         <div class="txtb">
-            <input type="text" name="name">
+            <input type="text" autocomplete="off" name="username">
             <span class="tipSpan" data-placeholder="UserName"></span>
         </div>
 
