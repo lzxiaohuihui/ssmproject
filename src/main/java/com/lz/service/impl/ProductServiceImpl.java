@@ -23,4 +23,9 @@ public class ProductServiceImpl implements ProductService {
     public List<Product> queryAllProduct() {
         return productMapper.list();
     }
+
+    @Override
+    public Product queryProductByPid(int pid) {
+        return productMapper.get(pid);
+    }
 }

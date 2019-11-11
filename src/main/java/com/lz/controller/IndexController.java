@@ -7,10 +7,9 @@ import com.lz.service.ProductService;
 import com.lz.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Map;
@@ -34,11 +33,25 @@ public class IndexController {
     }
 
     @RequestMapping("/loginPage")
+    public String loginUI(HttpServletRequest request) {
+        //在session中保存进入登录之前的页面
+        HttpSession session = request.getSession();
+        //保存登录前的页面
+        session.setAttribute("privatePage", request.getHeader("Referer"));
+        return "login";
+    }
+
+
+    @RequestMapping(method= {RequestMethod.POST}, value="/login")
     public String checkUser(@RequestParam("username") String username, @RequestParam("pwd") String pwd, HttpSession session) {
         User tempUser = new User(username,pwd);
         if(userService.isUser(tempUser)){
             session.setAttribute("user",tempUser);
-            return "redirect:/index";
+            Object privatePage = session.getAttribute("privatePage");
+            if(privatePage==null){
+                return "redirect:/index";
+            }
+            return "redirect:"+privatePage.toString();
         }
         return "login";
     }
@@ -57,10 +70,10 @@ public class IndexController {
         return "0";
     }
 
-    @RequestMapping("/login")
-    public String login(){
-        return "login";
-    }
+//    @RequestMapping("/login")
+//    public String login(){
+//        return "login";
+//    }
     @RequestMapping("/register")
     public String register(){
         return "register";
@@ -77,6 +90,11 @@ public class IndexController {
         return "login";
     }
 
-
+    @RequestMapping("/item/{pid}")
+    public String item(@PathVariable("pid") int pid,Map<String, Product> map){
+        Product product = productService.queryProductByPid(pid);
+        map.put("product",product);
+        return "item";
+    }
 
 }

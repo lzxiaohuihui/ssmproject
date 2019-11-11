@@ -17,10 +17,10 @@
 
             <div class="productUnit">
                 <div class="productItem">
-                    <a href="item.jsp?pid=${product.price}" class="productImage"> <img src="img/item/${product.pid*5}.jpg" width="190px" height="190px" alt=""></a>
+                    <a href="item/${product.pid}" class="productImage"> <img src="img/item/${product.pid*5}.jpg" width="190px" height="190px" alt=""></a>
                     <span class="productPrice">￥${product.price}</span>
-                    <a href="item.jsp?pid=${product.pid}" class="productDetail" style="height: 33px">${product.name}</a>
-                    <a href="item.jsp?pid=${product.pid}" class="productMall">天狗专卖</a>
+                    <a href="item/${product.pid}" class="productDetail" style="height: 33px">${product.name}</a>
+                    <a href="item/${product.pid}" class="productMall">天狗专卖</a>
                     <div class="showProductInfo">
                         <div class="productDealMonth">月销量
                             <span class="productDealMonthNumber">1笔</span>

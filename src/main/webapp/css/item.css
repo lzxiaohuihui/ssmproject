@@ -1,0 +1,245 @@
+.simpleSearchOutDiv{
+    margin: 10px 250px 10px 250px;
+    height: 50px;
+}
+.simpleSearchOutDiv a{
+    float: left;
+}
+.simpleSearchDiv{
+    background-color: #c40000;
+    float: right;
+}
+
+.simpleSearchDiv input{
+    margin: 1px;
+}
+.simpleSearchDiv button{
+    left: 2px;
+    font-weight: bold;
+    border: none;
+    background-color: #c40000;
+    border: 1px solid transparent;
+    color: white;
+}
+.belowItem{
+    background-color: white;
+}
+.belowItem span{
+    font-size: 10px;
+    color: #999;
+}
+
+.categoryPictureInProductPageDiv{
+    margin: 40px 250px 10px 250px;
+}
+
+.itemAndInfo{
+    margin: 40px 250px 10px 250px;
+    float: left;
+}
+.imgInfoDiv{
+    width: 400px;
+    float: left;
+
+}
+div.imgInfoDiv img.bigImg{
+    width: 358px;
+    padding: 20px;
+    border: 1px solid #e7e7e7;
+}
+.smallImgDiv{
+    padding: 20px;
+}
+.smallImg{
+    width: 60px;
+    height: 60px;
+    border: 2px solid white;
+}
+.smallImg:hover{
+    border: 1px solid black;
+}
+
+.itemInfoDiv{
+    float: left;
+    overflow: hidden;
+    width: 450px;
+    padding: 0px 20px ;
+}
+.productPrice{
+    height: auto;
+}
+.productTitle{
+    font-size: 16px;
+    color: black;
+    margin: 0px 10px ;
+    font-weight: bold;
+}
+.jvhuasuan{
+    background-color: #2DA77A;
+    color: white;
+    text-align: center;
+    font-size: 12px;
+    line-height: 40px;
+    margin-top: 10px;
+}
+.jvhuasuanbig{
+    font-size: 16px;
+    font-weight: bold;
+
+}
+.jvhuasuanTime{
+    color: #FFC057;
+    font-weight: bold;
+}
+.productPriceDiv{
+    background-image:url(http://how2j.cn/tmall/img/site/priceBackground.png);
+    height: 102px;
+
+    padding: 10px;
+    color: #666666;
+}
+.gouwujuanDiv{
+    margin-top: 5px;
+}
+.originalPriceDesc{
+    color: #999999;
+    display: inline-block;
+    width: 68px;
+}
+div.originalDiv{
+    margin-top: 5px;
+}
+.originalPrice{
+    font-family: Arial;
+    font-size: 12px;
+    color: #333333;
+    text-decoration: line-through;
+}
+.promotionPriceYuan{
+    font-family: Arial;
+    font-size: 18px;
+    color: #C40000;
+}
+.promotionPrice{
+    color: #c40000;
+    font-family: Arial;
+    font-size: 30px;
+    font-weight: bold;
+}
+.promotionPriceDesc{
+    color: #999999;
+    display: inline-block;
+    width: 68px;
+    position: relative;
+    left: 0px;
+    top: -10px;
+}
+.productSaleAndReviewNumber{
+    margin: 20px 0px;
+    border-top-style: dotted;
+    border-top-color: #C9C9C9;
+    border-top-width: 1px;
+    border-bottom-style: dotted;
+    border-bottom-color: #C9C9C9;
+    border-bottom-width: 1px;
+    padding: 10px;
+}
+.productSaleAndReviewNumber div{
+    display: inline-block;
+    width: 49%;
+    text-align: center;
+    color: #999999;
+    font-size: 12px;
+}
+.productSaleAndReviewNumber div:first-child{
+    border-right-width: 1px;
+    border-right-style: solid;
+    border-right-color: #E5DFDA;
+}
+.productNumber{
+    color: #999999;
+}
+.productNumberSettingSpan{
+    border: 1px solid #999;
+    display: inline-block;
+    width: 43px;
+    height: 32px;
+    padding-top:7px;
+}
+.productNumberSetting{
+    border: 0px;
+    height: 80%;
+    width: 80%;
+}
+.updown img{
+    display:inline-block;
+    vertical-align:top;
+}
+.updown{
+    border: 1px solid #999;
+    display: block;
+    width: 20px;
+    height: 14px;
+    text-align: center;
+    padding-top:4px;
+}
+.updownMiddle{
+    height: 4px;
+    display: block;
+}
+.arrow{
+    display: inline-block;
+    width: 22px;
+    height: 32px;
+    vertical-align:top;
+}
+div.serviceCommitment{
+    margin: 20px 0px;
+}
+div.infoInimgAndInfo span.serviceCommitmentDesc{
+    color: #999999;
+}
+div.infoInimgAndInfo span.serviceCommitmentLink a{
+    color: #666666;
+}
+div.buyDiv{
+    margin: 20px auto;
+    text-align: center;
+}
+div.buyDiv button{
+    display: inline-block;
+    margin: 0px 10px;
+    width: 180px;
+    height: 40px;
+}
+button.buyButton{
+    border: 1px solid #C40000;
+    background-color: #FFEDED;
+    text-align: center;
+    line-height: 40px;
+    font-size: 16px;
+    color: #C40000;
+    font-family: arial;
+}
+button.addCartButton{
+    border: 1px solid #C40000;
+    background-color: #C40000;
+    text-align: center;
+    line-height: 40px;
+    font-size: 16px;
+    color: white;
+    font-family: arial;
+}
+button.addCartButton span.glyphicon{
+    font-size: 12px;
+    margin-right: 8px;
+}
+a:hover{
+    text-decoration:none;
+}
+.redColor{
+    color: #C40000;
+}
+.boldWord{
+    font-weight: bold;
+}

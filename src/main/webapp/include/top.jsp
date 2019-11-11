@@ -10,7 +10,7 @@
 
 
 <nav class="top ">
-    <a href="index">
+    <a href="${pageContext.request.contextPath}/index">
         <span class="glyphicon glyphicon-home redColor"></span>
         天狗首页
     </a>
@@ -18,13 +18,13 @@
     <span>喵，欢迎来天狗</span>
 
     <c:if test="${sessionScope;!empty user}">
-        <a href="login">${user.username}</a>
+        <a href="${pageContext.request.contextPath}/loginPage">${user.username}</a>
         <a href="#" id="forelogout">退出</a>
     </c:if>
 
     <c:if test="${sessionScope;empty user}">
-        <a href="login">请登录</a>
-        <a href="register">免费注册</a>
+        <a href="${pageContext.request.contextPath}/loginPage">请登录</a>
+        <a href="${pageContext.request.contextPath}/register">免费注册</a>
     </c:if>
 
 

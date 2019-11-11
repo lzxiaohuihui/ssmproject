@@ -5,5 +5,7 @@ import com.lz.entity.Product;
 import java.util.List;
 
 public interface ProductService {
-    public List<Product> queryAllProduct();
+    List<Product> queryAllProduct();
+
+    Product queryProductByPid(int pid);
 }

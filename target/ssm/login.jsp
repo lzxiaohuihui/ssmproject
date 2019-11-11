@@ -11,7 +11,7 @@
 </head>
 <body>
 
-    <form action="loginPage" method="POST">
+    <form action="login" method="POST">
         <h1>Login</h1>
 
         <div class="txtb">
