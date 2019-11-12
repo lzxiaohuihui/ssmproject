@@ -22,6 +22,7 @@
 <body style="width: 1400px">
     <%@include file="include/top.jsp"%>
     <%@include file="include/imgAndInfo.jsp"%>
+    <%@include file="include/productReview.jsp"%>
     <%@include file="include/footer.jsp"%>
 </body>
 </html>
