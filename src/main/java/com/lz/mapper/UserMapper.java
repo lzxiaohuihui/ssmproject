@@ -10,4 +10,6 @@ public interface UserMapper {
     void createCart(@Param("uid") int uid);
     int getUid(@Param("username") String username);
     int checkCart(@Param("uid") int uid);
+
+    String getName(int uid);
 }

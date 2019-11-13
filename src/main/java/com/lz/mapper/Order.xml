@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.lz.mapper.OrderMapper">
+
+    <select id="list" resultType="com.lz.entity.Order">
+        select * from order
+    </select>
+
+    <insert id="add" parameterType="com.lz.entity.Order">
+        insert into order values(#{uid},#{pid},#{quantity},#{date})
+    </insert>
+
+</mapper>

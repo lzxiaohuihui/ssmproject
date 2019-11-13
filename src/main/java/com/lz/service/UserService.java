@@ -8,4 +8,5 @@ public interface UserService {
     boolean checkName(String username);
     int getUid(String username);
     void createCart(int uid);
+    String getName(int uid);
 }

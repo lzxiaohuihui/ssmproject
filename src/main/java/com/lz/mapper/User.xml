@@ -29,5 +29,9 @@
         select count(uid) from cart where uid = #{uid}
     </select>
 
+    <select id="getName" parameterType="int" resultType="String">
+        select username from user where uid = #{uid}
+    </select>
+
 
 </mapper>

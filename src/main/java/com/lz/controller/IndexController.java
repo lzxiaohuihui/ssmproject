@@ -99,6 +99,7 @@ public class IndexController {
     public String item(@PathVariable("pid") int pid,Map<String, Object> map){
         Product product = productService.queryProductByPid(pid);
         List<Review> reviews = reviewService.queryReviewByPid(pid);
+
         map.put("product",product);
         map.put("reviews",reviews);
         return "item";

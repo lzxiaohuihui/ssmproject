@@ -47,4 +47,9 @@ public class UserServiceImpl implements UserService {
             userMapper.createCart(uid);
     }
 
+    @Override
+    public String getName(int uid) {
+        return userMapper.getName(uid);
+    }
+
 }

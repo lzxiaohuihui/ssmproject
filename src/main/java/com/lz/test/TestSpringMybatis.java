@@ -1,9 +1,9 @@
 package com.lz.test;
 
 import com.lz.entity.Product;
-import com.lz.entity.User;
 import com.lz.mapper.ProductMapper;
-import com.lz.mapper.UserMapper;
+import com.lz.service.CartService;
+import com.lz.service.OrderService;
 import com.lz.service.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,13 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.util.Date;
 import java.util.List;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:applicationContext.xml")
 public class TestSpringMybatis {
-    @Autowired
-    private UserMapper userMapper;
 
     @Autowired
     private ProductMapper productMapper;
@@ -25,7 +24,11 @@ public class TestSpringMybatis {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private CartService cartService;
 
+    @Autowired
+    private OrderService orderService;
     @Test
     public void testAdd() {
         Product product = new Product();
@@ -43,13 +46,7 @@ public class TestSpringMybatis {
     }
     @Test
     public void testAddUser(){
-        //userMapper.add(new User("ls","24"));
-        //User user = userMapper.get(new User("l2","24"));
-        //User user = userMapper.checkName("1s");
-
-//        System.out.println(user);
-        userService.addUser(new User("ll","26"));
-        int uid = userService.getUid("ll");
-        userService.createCart(uid);
+        Date date = new Date();
+//        orderService.addOder(1,1,1,);
     }
 }
