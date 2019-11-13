@@ -92,7 +92,7 @@ div.imgInfoDiv img.bigImg{
     font-weight: bold;
 }
 .productPriceDiv{
-    background-image:url(http://how2j.cn/tmall/img/site/priceBackground.png);
+    background-image:url(../img/site/priceBackground.png);
     height: 102px;
 
     padding: 10px;

@@ -28,4 +28,5 @@ public class ProductServiceImpl implements ProductService {
     public Product queryProductByPid(int pid) {
         return productMapper.get(pid);
     }
+
 }

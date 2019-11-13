@@ -2,8 +2,10 @@ package com.lz.controller;
 
 
 import com.lz.entity.Product;
+import com.lz.entity.Review;
 import com.lz.entity.User;
 import com.lz.service.ProductService;
+import com.lz.service.ReviewService;
 import com.lz.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,6 +26,9 @@ public class IndexController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    ReviewService reviewService;
 
     @RequestMapping("/index")
     public String queryAllProduct(Map<String,Object> map) {
@@ -91,9 +96,11 @@ public class IndexController {
     }
 
     @RequestMapping("/item/{pid}")
-    public String item(@PathVariable("pid") int pid,Map<String, Product> map){
+    public String item(@PathVariable("pid") int pid,Map<String, Object> map){
         Product product = productService.queryProductByPid(pid);
+        List<Review> reviews = reviewService.queryReviewByPid(pid);
         map.put("product",product);
+        map.put("reviews",reviews);
         return "item";
     }
 

@@ -111,15 +111,15 @@
 				<input type="text" value="1" class="productNumberSetting">
 				</span>
 				<span class="arrow">
-					<a class="increaseNumber" href="#nowhere">
+					<a class="increaseNumber" href="#">
 					<span class="updown">
-					   <img src="http://how2j.cn/tmall/img/site/increase.png">
+					   <img src="${pageContext.request.contextPath}/img/site/increase.png">
 					</span>
 					</a>
 					<span class="updownMiddle"> </span>
-					<a class="decreaseNumber" href="#nowhere">
+					<a class="decreaseNumber" href="#">
 					<span class="updown">
-					    <img src="http://how2j.cn/tmall/img/site/decrease.png">
+					    <img src="${pageContext.request.contextPath}/img/site/decrease.png">
 					</span>
 					</a>
 				</span>

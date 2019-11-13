@@ -14,12 +14,12 @@
     <script src="${pageContext.request.contextPath}/js/jquery/2.0.0/jquery.min.js"></script>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/item.css">
-    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
-    <script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap/3.3.6/bootstrap.min.css">
+    <script src="${pageContext.request.contextPath}/js/bootstrap/3.3.6/bootstrap.min.js"></script>
     <title>${product.name}</title>
 
 </head>
-<body style="width: 1400px">
+<body style="min-width: 1400px">
     <%@include file="include/top.jsp"%>
     <%@include file="include/imgAndInfo.jsp"%>
     <%@include file="include/productReview.jsp"%>

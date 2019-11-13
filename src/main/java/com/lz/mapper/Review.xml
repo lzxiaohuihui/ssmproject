@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.lz.mapper.ReviewMapper">
+    <insert id="addReview" parameterType="com.lz.entity.Review">
+        insert into review values(#{review.pid},(#{review.uid},(#{review.content},(#{review.date})
+    </insert>
+
+    <select id="queryReview" parameterType="int" resultType="com.lz.entity.Review">
+        select * from review where pid = #{pid};
+    </select>
+</mapper>
