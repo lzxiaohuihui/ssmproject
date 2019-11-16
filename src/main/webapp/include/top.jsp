@@ -29,8 +29,8 @@
 
 
     <span class="pull-right">
-                    <a href="order.jsp">我的订单</a>
-                    <a href="shoppingCart.jsp">
+                    <a href="${pageContext.request.contextPath}/order">我的订单</a>
+                    <a href="${pageContext.request.contextPath}/cart">
                     <span class=" glyphicon glyphicon-shopping-cart redColor" ></span>
                     购物车<strong>0</strong>件</a>
                 </span>

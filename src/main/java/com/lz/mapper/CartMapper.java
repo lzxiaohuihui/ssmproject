@@ -8,4 +8,5 @@ import java.util.List;
 public interface CartMapper {
     List<Product> list(int uid);
     void add(@Param("uid") int uid,@Param("pid") int pid);
+    void delete (@Param("uid") int uid,@Param("pid") int pid);
 }

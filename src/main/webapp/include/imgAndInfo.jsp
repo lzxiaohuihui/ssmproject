@@ -137,8 +137,8 @@
         </div>
 
         <div class="buyDiv">
-            <a href="buy/${product.pid}" class="buyLink"><button class="buyButton">立即购买</button></a>
-            <a class="addCartLink" href="addCart/${product.pid}"><button class="addCartButton"><span class="glyphicon glyphicon-shopping-cart"></span>加入购物车</button></a>
+            <a href="${pageContext.request.contextPath}/buy/${product.pid}" class="buyLink"><button class="buyButton">立即购买</button></a>
+            <a class="addCartLink" href="${pageContext.request.contextPath}/addCart/${product.pid}"><button class="addCartButton"><span class="glyphicon glyphicon-shopping-cart"></span>加入购物车</button></a>
         </div>
     </div>
 </div>

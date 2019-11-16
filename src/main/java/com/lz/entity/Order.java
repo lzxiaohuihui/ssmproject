@@ -1,5 +1,8 @@
 package com.lz.entity;
 
+import net.sf.jsqlparser.expression.DateTimeLiteralExpression;
+
+import java.sql.Timestamp;
 import java.util.Date;
 
 public class Order {
@@ -8,11 +11,16 @@ public class Order {
     private int quantity;
     private Date date;
 
-    public Order(int uid, int pid, int quantity, Date date) {
+    public Order(int uid, int pid, int quantity, Timestamp date) {
         this.uid = uid;
         this.pid = pid;
         this.quantity = quantity;
         this.date = date;
+    }
+    public Order(int uid, int pid, int quantity) {
+        this.uid = uid;
+        this.pid = pid;
+        this.quantity = quantity;
     }
     public Order() {
     }
@@ -45,7 +53,7 @@ public class Order {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(Timestamp date) {
         this.date = date;
     }
 }

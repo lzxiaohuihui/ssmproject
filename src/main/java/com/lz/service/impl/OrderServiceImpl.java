@@ -15,12 +15,18 @@ public class OrderServiceImpl implements OrderService {
     OrderMapper orderMapper;
 
     @Override
-    public List<Order> queryAllOrder() {
-        return orderMapper.list();
+    public List<Order> queryAllOrder(int uid) {
+        return orderMapper.list(uid);
+    }
+
+
+    @Override
+    public void addOrder(Order order) {
+        orderMapper.add(order);
     }
 
     @Override
-    public void addOder(Order order) {
-        orderMapper.add(order);
+    public void deleteOrder(int uid, int pid) {
+        orderMapper.delete(uid,pid);
     }
 }
