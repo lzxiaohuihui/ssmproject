@@ -10,7 +10,7 @@
 	<div>
 		<span class="confirmMoneyText">扫一扫付款（元）</span>
 		<span class="confirmMoney">
-		￥${requestScope.total}</span>
+		￥${requestScope.price}</span>
 		
 	</div>
 	<div>

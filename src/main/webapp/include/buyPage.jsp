@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <div class="buyPageDiv">
-  <form action="${pageContext.request.contextPath}/forecreateOrder/${requestScope.total}" method="post">
+  <form action="${pageContext.request.contextPath}/forecreateOrder" method="post">
 
 	<div class="buyFlow">
 		<img class="pull-left" src="${pageContext.request.contextPath}/img/site/simpleLogo.png">
@@ -16,7 +16,7 @@
 				<tr>
 					<td class="firstColumn">详细地址<span class="redStar">*</span></td>
 
-					<td><textarea name="address" placeholder="建议您如实填写详细收货地址，例如接到名称，门牌好吗，楼层和房间号等信息"></textarea></td>
+					<td><textarea name="address" placeholder="建议您如实填写详细收货地址，例如接到名称，门牌号码，楼层和房间号等信息"></textarea></td>
 				</tr>
 				<tr>
 					<td>邮政编码</td>
@@ -28,7 +28,7 @@
 				</tr>
 				<tr>
 					<td>手机号码 <span class="redStar">*</span></td>
-					<td><input name="mobile"  placeholder="请输入11位手机号码" type="text"></td>
+					<td><input name="mobile"  placeholder="请输入11位手机号码" type="number"></td>
 				</tr>
 			</table>
 
@@ -72,15 +72,15 @@
 				<c:forEach var="product" items="${requestScope.products}">
 					<tr class="orderItemTR">
 						<td class="orderItemFirstTD"><img class="orderItemImg" src="../img/item/${product.pid*5}.jpg"></td>
-						<td class="orderItemProductInfo">
-						<a  href="${pageContext.request.contextPath}/item/${product.pid}" class="orderItemProductLink">
+						<td class="orderItemProductInfo" >
+
+						<a href="${pageContext.request.contextPath}/item/${product.pid}" class="orderItemProductLink">
 							${product.name}
 						</a>
 
-
-							<img src="../img/site/creditcard.png" title="支持信用卡支付">
-							<img src="../img/site/7day.png" title="消费者保障服务,承诺7天退货">
-							<img src="../img/site/promise.png" title="消费者保障服务,承诺如实描述">
+						<img src="../img/site/creditcard.png" title="支持信用卡支付">
+						<img src="../img/site/7day.png" title="消费者保障服务,承诺7天退货">
+						<img src="../img/site/promise.png" title="消费者保障服务,承诺如实描述">
 
 						</td>
 						<td>
@@ -93,8 +93,7 @@
 						<td><span class="orderItemUnitSum">
 						￥${product.price}
 						</span></td>
-						<c:if test="${product.pid==1}">
-						<td rowspan="5"  class="orderItemLastTD">
+							<td rowspan="5"  class="orderItemLastTD">
 						<label class="orderItemDeliveryLabel">
 							<input type="radio" value="" checked="checked">
 							普通配送
@@ -105,8 +104,11 @@
 						</select>
 
 						</td>
-						</c:if>
 
+						<td>
+							<input name="pid" value="${product.getPid()}" hidden/>
+							<input name="price" value="${product.getPrice()}" hidden/>
+						</td>
 					</tr>
 				</c:forEach>
 
@@ -127,7 +129,7 @@
 				</span>
 			</div>
 
-			<span class="pull-right">店铺合计(含运费): ￥${requestScope.total}</span>
+			<span class="pull-right">店铺合计(含运费): ￥${requestScope.price}</span>
 		</div>
 
 
@@ -138,7 +140,7 @@
 	<div class="orderItemTotalSumDiv">
 		<div class="pull-right">
 			<span>实付款：</span>
-			<label class="orderItemTotalSumSpan" name="total">￥${requestScope.total}</label>
+			<label class="orderItemTotalSumSpan" name="price">￥${requestScope.price}</label>
 		</div>
 	</div>
 

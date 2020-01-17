@@ -28,28 +28,33 @@
     <div class="orderListItem">
 
 
-<c:forEach var="product" items="${requestScope.products}" >
+<c:forEach var="i" begin="0" end="${requestScope;orders.size()-1}" >
 
         <table oid="946" orderstatus="waitReview" class="orderListItemTable" style="display: table;">
             <tbody><tr class="orderListItemFirstTR">
                 <td colspan="2">
-                    <b>2016-09-12 17:00:41</b>
-                    <span>订单号: 20160912170041674794
+                    <b>${requestScope;(orders.get(i)).getDate()}</b>
+                    <span>${requestScope;(orders.get(i)).getNo()}
 					</span>
                 </td>
+
                 <td colspan="2"><img width="13px" src="http://how2j.cn/tmall/img/site/orderItemTmall.png">天猫商场</td>
                 <td colspan="1">
                     <a href="#nowhere" class="wangwanglink">
                         <div class="orderItemWangWangGif"></div>
                     </a>
                 </td>
+
                 <td class="orderItemDeleteTD">
-                    <a href="#nowhere" oid="${product.pid}" class="deleteOrderLink">
+                    <a href="#nowhere" oid="${requestScope;(orders.get(i)).getOid()}" class="deleteOrderLink">
                         <span class="orderListItemDelete glyphicon glyphicon-trash"></span>
                     </a>
                 </td>
             </tr>
+
+
             <tr class="orderItemProductInfoPartTR">
+                <c:forEach var="product" items="${requestScope;products.get(i)}">
                 <td class="orderItemProductInfoPartTD"><img width="80" height="80" src="img/item/${product.pid*5}.jpg"></td>
                 <td class="orderItemProductInfoPartTD">
                     <div class="orderListItemProductLinkOutDiv">
@@ -64,11 +69,13 @@
                 <td width="100px" class="orderItemProductInfoPartTD">
                     <div class="orderListItemProductPrice">￥${product.price}</div>
                 </td>
+
+
                 <td width="100px" valign="top" class="orderListItemNumberTD orderItemOrderInfoPartTD" rowspan="1">
                     <span class="orderListItemNumber">1</span>
                 </td>
                 <td width="120px" valign="top" class="orderListItemProductRealPriceTD orderItemOrderInfoPartTD" rowspan="1">
-                    <div class="orderListItemProductRealPrice">￥${product.price}</div>
+                    <div class="orderListItemProductRealPrice">￥00</div>
                     <div class="orderListItemPriceWithTransport">(含运费：￥0.00)</div>
                 </td>
                 <td width="100px" valign="top" class="orderListItemButtonTD orderItemOrderInfoPartTD" rowspan="1">
@@ -77,6 +84,7 @@
                     </a>
                 </td>
             </tr>
+            </c:forEach>
             </tbody></table>
     </c:forEach>
     </div>

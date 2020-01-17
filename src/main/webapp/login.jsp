@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js" charset="utf-8"></script>
-    <link href="css/login.css" rel="stylesheet"/>
+    <link href="${pageContext.request.contextPath}/css/login.css" rel="stylesheet"/>
     <title>login</title>
 
 </head>
@@ -38,7 +38,7 @@
         });
 
         $(".txtb input").on("blur",function(){
-            if($(this).val()=='')
+            if($(this).val()==='')
             $(this).removeClass("focus");
         });
         

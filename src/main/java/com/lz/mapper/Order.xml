@@ -6,16 +6,38 @@
 
 <mapper namespace="com.lz.mapper.OrderMapper">
 
-    <select id="list" resultType="com.lz.entity.Order">
+    <select id="listOrder" parameterType="int" resultType="com.lz.entity.Order">
         select * from order_ where uid = #{uid}
     </select>
 
+    <select id="listProducts" parameterType="int" resultType="com.lz.entity.Product">
+        select * from product where pid in (
+            select pid from order_item where oid = #{oid}
+            )
+    </select>
+
+    <select id="queryOid" parameterType="long" resultType="int">
+        select oid from order_ where no = #{no}
+    </select>
+    
     <insert id="add" parameterType="com.lz.entity.Order">
-        insert into order_ (uid,pid,quantity) values(#{uid},#{pid},#{quantity})
+        insert into order_ (uid,date,no,address,post,receiver,mobile,price) values(#{uid},#{date},#{no},#{address},#{post},#{receiver},#{mobile},#{price})
+    </insert>
+
+    <insert id="addUserAndOrder" parameterType="map">
+        insert into order_item(oid,pid) values(#{oid}, #{pid})
     </insert>
 
     <delete id="delete" parameterType="int">
-        delete from order_ where uid = #{uid} and pid = #{pid}
+        delete from order_ where oid = #{oid}
     </delete>
+
+    <delete id="deleteUserAndOrder" parameterType="int">
+        delete from order_item where oid = #{oid}
+    </delete>
+
+    <update id="payed" parameterType="int">
+        update order_ set ispay = 1 where oid = #{oid}
+    </update>
 
 </mapper>

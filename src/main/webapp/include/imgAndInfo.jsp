@@ -2,47 +2,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-    <script>
-        $(function(){
-            $("img.smallImg").mouseenter(function(){
-                var bigImageURL = $(this).attr("src");
-                $("img.bigImg").attr("src",bigImageURL);
-            });
-        });
-        $(function(){
-            var stock = 66;
-            $(".productNumberSetting").keyup(function(){
-                var num= $(".productNumberSetting").val();
-                num = parseInt(num);
-                if(isNaN(num))
-                    num= 1;
-                if(num<=0)
-                    num = 1;
-                if(num>stock)
-                    num = stock;
-                $(".productNumberSetting").val(num);
-            });
-
-            $(".increaseNumber").click(function(){
-                var num= $(".productNumberSetting").val();
-                num++;
-                if(num>stock)
-                    num = stock;
-                $(".productNumberSetting").val(num);
-            });
-            $(".decreaseNumber").click(function(){
-                var num= $(".productNumberSetting").val();
-                --num;
-                if(num<=0)
-                    num=1;
-                $(".productNumberSetting").val(num);
-            });
-
-        });
-    </script>
-
-
-
 <div class="simpleSearchOutDiv">
     <a href="index.html">
         <img src="${pageContext.request.contextPath}/img/site/simpleLogo.png" alt="">
@@ -101,8 +60,8 @@
             </div>
         </div>
         <div class="productSaleAndReviewNumber">
-            <div>销量 <span class="redColor boldWord"> 50</span></div>
-            <div>累计评价 <span class="redColor boldWord"> 19</span></div>
+            <div>销量 <span class="redColor boldWord"> ${product.getSales()}</span></div>
+            <div>累计评价 <span class="redColor boldWord">${product.getReviews()}</span></div>
         </div>
         <div class="productNumber">
             <span>数量</span>
@@ -124,7 +83,7 @@
 					</a>
 				</span>
 			    件</span>
-            <span>库存66件</span>
+            <span>库存${product.getStock()}件</span>
         </div>
         <div class="serviceCommitment">
             <span class="serviceCommitmentDesc">服务承诺</span>

@@ -1,29 +1,122 @@
 package com.lz.entity;
 
-import net.sf.jsqlparser.expression.DateTimeLiteralExpression;
-
 import java.sql.Timestamp;
-import java.util.Date;
 
 public class Order {
     private int uid;
-    private int pid;
-    private int quantity;
-    private Date date;
+    private int oid;
+    private Timestamp date;
+    private long no;
+    private String address;
+    private int post;
+    private String receiver;
+    private long mobile;
+    private float price;
 
-    public Order(int uid, int pid, int quantity, Timestamp date) {
+    public float getPrice() {
+        return price;
+    }
+    public void setPrice(float price) {
+        this.price = price;
+    }
+
+    public int getIspay() {
+        return ispay;
+    }
+
+    public void setIspay(int ispay) {
+        this.ispay = ispay;
+    }
+
+    private int ispay;
+
+
+    public Order(String address, int post, String receiver, long mobile) {
+        this.address = address;
+        this.post = post;
+        this.receiver = receiver;
+        this.mobile = mobile;
+    }
+    public Order(int uid, Timestamp date) {
         this.uid = uid;
-        this.pid = pid;
-        this.quantity = quantity;
         this.date = date;
     }
-    public Order(int uid, int pid, int quantity) {
+
+    public Order(int uid) {
         this.uid = uid;
-        this.pid = pid;
-        this.quantity = quantity;
     }
+    public Order(int uid, int oid, Timestamp date, long no, String address, int post, String receiver, long mobile) {
+        this.uid = uid;
+        this.oid = oid;
+        this.date = date;
+        this.no = no;
+        this.address = address;
+        this.post = post;
+        this.receiver = receiver;
+        this.mobile = mobile;
+    }
+    public Order(int uid, Timestamp date, long no, String address, int post, String receiver, long mobile) {
+        this.uid = uid;
+        this.date = date;
+        this.no = no;
+        this.address = address;
+        this.post = post;
+        this.receiver = receiver;
+        this.mobile = mobile;
+    }
+
+
     public Order() {
     }
+
+    public int getOid() {
+        return oid;
+    }
+
+    public void setOid(int oid) {
+        this.oid = oid;
+    }
+
+    public long getNo() {
+        return no;
+    }
+
+    public void setNo(long no) {
+        this.no = no;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public int getPost() {
+        return post;
+    }
+
+    public void setPost(int post) {
+        this.post = post;
+    }
+
+    public String getReceiver() {
+        return receiver;
+    }
+
+    public void setReceiver(String receiver) {
+        this.receiver = receiver;
+    }
+
+    public long getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(long mobile) {
+        this.mobile = mobile;
+    }
+
 
     public int getUid() {
         return uid;
@@ -33,23 +126,8 @@ public class Order {
         this.uid = uid;
     }
 
-    public int getPid() {
-        return pid;
-    }
 
-    public void setPid(int pid) {
-        this.pid = pid;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
-    public Date getDate() {
+    public Timestamp getDate() {
         return date;
     }
 

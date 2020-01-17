@@ -62,7 +62,7 @@
                             </span>
                 </td>
                 <td>
-                    <a href="#nowhere" oiid="${product.pid}" class="deleteOrderItem">删除</a>
+                    <a href="#" oiid="${product.pid}" class="deleteOrderItem">删除</a>
                 </td>
             </tr>
 

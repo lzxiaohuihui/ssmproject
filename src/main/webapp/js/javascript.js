@@ -59,7 +59,7 @@ $(function(){
     });
 });
 $(function(){
-    var stock = 66;
+    var stock = 100;
     $(".productNumberSetting").keyup(function(){
         var num= $(".productNumberSetting").val();
         num = parseInt(num);
@@ -277,4 +277,30 @@ $(function(){
             );
         }
     })
+});
+
+
+$(document).ready(function(){
+    $("#forelogout").click(function(){
+        //通过ajax请求springmvc
+        $.post(
+            "forelogout",//服务器地址
+            function(result){
+                window.location.reload();
+            }
+        );
+    });
+});
+
+
+$(document).ready(function(){
+    $(".deleteOrderItem").click(function(){
+        $.post(
+            "deleteCartProduct",//服务器地址
+            {"pid" : $(this).attr("oiid")},
+            function(result){
+                window.location.reload();
+            }
+        );
+    });
 });

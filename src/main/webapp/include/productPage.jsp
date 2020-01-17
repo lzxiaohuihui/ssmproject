@@ -17,16 +17,16 @@
 
             <div class="productUnit">
                 <div class="productItem">
-                    <a href="item/${product.pid}" class="productImage"> <img src="img/item/${product.pid*5}.jpg" width="190px" height="190px" alt=""></a>
-                    <span class="productPrice">￥${product.price}</span>
-                    <a href="item/${product.pid}" class="productDetail" style="height: 33px">${product.name}</a>
-                    <a href="item/${product.pid}" class="productMall">天狗专卖</a>
+                    <a href="item/${product.getPid()}" class="productImage"> <img src="img/item/${product.getPid()*5}.jpg" width="190px" height="190px" alt=""></a>
+                    <span class="productPrice">￥${product.getPrice()}</span>
+                    <a href="item/${product.getPid()}" class="productDetail" style="height: 33px">${product.getName()}</a>
+                    <a href="item/${product.getPid()}" class="productMall">天狗专卖</a>
                     <div class="showProductInfo">
-                        <div class="productDealMonth">月销量
-                            <span class="productDealMonthNumber">1笔</span>
+                        <div class="productDealMonth">总销量
+                            <span class="productDealMonthNumber">${product.getSales()}笔</span>
                         </div>
                         <div class="productReview">评价
-                            <span class="productReviewNumber">10</span>
+                            <span class="productReviewNumber">${product.getReviews()}</span>
                         </div>
                         <a href="#"><span class="wangwang"><img src="img/site/wangwang.png" alt=""></span></a>
                     </div>

@@ -6,6 +6,15 @@ public class Product {
     private float price;
     private int stock;
     private int sales;
+    private int reviews;
+
+    public int getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(int reviews) {
+        this.reviews = reviews;
+    }
 
     public Product() {
     }
@@ -14,12 +23,13 @@ public class Product {
         this.name = name;
         this.price = price;
     }
-    public Product(int pid, String name, float price, int stock, int sales) {
+    public Product(int pid, String name, float price, int stock, int sales, int reviews) {
         this.pid = pid;
         this.name = name;
         this.price = price;
         this.stock = stock;
         this.sales = sales;
+        this.reviews = reviews;
     }
 
     public int getPid() {

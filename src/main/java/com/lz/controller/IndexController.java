@@ -6,19 +6,20 @@ import com.lz.entity.Product;
 import com.lz.entity.Review;
 import com.lz.entity.User;
 import com.lz.service.*;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import sun.security.action.PutAllAction;
+import org.springframework.web.multipart.MultipartFile;
 
-import javax.net.ssl.HttpsURLConnection;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.rmi.MarshalledObject;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -43,7 +44,6 @@ public class IndexController {
     OrderService orderService;
 
 
-
     @RequestMapping("/index")
     public String queryAllProduct(Map<String,Object> map) {
         List<Product> products = productService.queryAllProduct();
@@ -51,35 +51,34 @@ public class IndexController {
         return "index";
     }
 
-    @RequestMapping("/loginPage")
+    @RequestMapping(value = "/loginPage", method = {RequestMethod.GET})
     public String loginUI(HttpServletRequest request) {
         //在session中保存进入登录之前的页面
-        HttpSession session = request.getSession();
+//        HttpSession session = request.getSession();
         //保存登录前的页面
-        session.setAttribute("privatePage", request.getHeader("Referer"));
+//        session.setAttribute("privatePage", request.getHeader("Referer"));
         return "login";
     }
 
-
-    @RequestMapping(method= {RequestMethod.POST}, value="/login")
+    @RequestMapping(value="/login", method= {RequestMethod.POST})
     public String checkUser(@RequestParam("username") String username, @RequestParam("pwd") String pwd, HttpSession session) {
         User tempUser = new User(username,pwd);
-        tempUser.setUid(userService.getUid(tempUser.getUsername()));
+        int uid = userService.getUid(tempUser.getUsername());
+        tempUser.setUid(uid);
         if(userService.isUser(tempUser)){
             session.setAttribute("user",tempUser);
-            Object privatePage = session.getAttribute("privatePage");
-            if(privatePage==null){
-                return "redirect:/index";
-            }
-            return "redirect:"+privatePage.toString();
+            List<Product> cart = cartService.getCartProducts(uid);
+            session.setAttribute("cart", cart);
+            return "redirect:index";
         }
         return "login";
     }
 
     @ResponseBody
-    @RequestMapping("/forelogout")
+    @RequestMapping(value = "/forelogout", method = {RequestMethod.POST})
     public void forelogout(HttpSession session){
-        session.removeAttribute("user");
+        session.invalidate();
+
     }
 
     @ResponseBody
@@ -135,28 +134,62 @@ public class IndexController {
 
         User user = (User) session.getAttribute("user");
         cartService.addCart(user.getUid(),pid);
+        List<Product> cart = cartService.getCartProducts(user.getUid());
+        session.setAttribute("cart", cart);
 
         return "redirect:"+request.getHeader("Referer");
     }
+
+    @ResponseBody
+    @RequestMapping(value = "/deleteCartProduct", method = {RequestMethod.POST})
+    public String deleteCartProuct(HttpServletRequest request){
+        int pid = Integer.parseInt(request.getParameter("pid"));
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
+        cartService.deleteCart(user.getUid(),pid);
+        List<Product> cart = cartService.getCartProducts(user.getUid());
+        session.setAttribute("cart", cart);
+        return "cart";
+    }
+
+
+
 
     @RequestMapping("/buy/{pid}")
     public String addOrder(@PathVariable("pid") int pid, Map<String, Object> map){
         List<Product> products = new ArrayList<>();
         products.add(productService.queryProductByPid(pid));
-        double total = 0;
-        for(Product product : products){
-            total += product.getPrice();
-        }
-        map.put("total", total);
+        float price = (productService.queryProductByPid(pid)).getPrice();
+        map.put("price", price);
         map.put("products", products);
         return "buy";
     }
 
-    @RequestMapping("forecreateOrder/{total}")
-    public String createOrder(@PathVariable("total") String total, Map<String, Object> map){
-        map.put("total",total);
+
+    @RequestMapping(value = "forecreateOrder", method = {RequestMethod.POST})
+    public String createOrder(HttpSession session,Order order, @RequestParam("pid") int[] pid, Map<String, Object> map,@RequestParam("price") float[] price){
+        User user = (User) session.getAttribute("user");
+        int uid = user.getUid();
+        Date date = new Date();
+        Timestamp timestamp = new Timestamp(date.getTime());
+        long no = timestamp.getTime();
+        float total = 0;
+        for (float p:price){
+            total += p;
+        }
+        order.setUid(uid);
+        order.setDate(timestamp);
+        order.setNo(no);
+        order.setPrice(total);
+        orderService.addOrder(order, pid);
+        map.put("price", total);
         return "pay";
     }
+//    @RequestMapping("forecreateOrder/{total}")
+//    public String Order(@PathVariable("total") String total, Map<String, Object> map){
+//        map.put("total",total);
+//        return "pay";
+//    }
 
     @RequestMapping("payed/{total}")
     public String payed(@PathVariable("total") String total, Map<String, Object> map){
@@ -167,12 +200,34 @@ public class IndexController {
     public String order(Map<String, Object> map, HttpSession session){
         User user = (User) session.getAttribute("user");
         List<Order> orders = orderService.queryAllOrder(user.getUid());
-        List<Product> products = new ArrayList<>();
+        List<List<Product>> products = new ArrayList<>();
+
         for( Order order: orders) {
-            products.add(productService.queryProductByPid(order.getPid()));
+            products.add(orderService.queryOrderProduct(order.getOid()));
         }
         map.put("products",products);
+        map.put("orders",orders);
+
         return "order";
     }
+    @RequestMapping("testUpload")
+    public String upload(@RequestParam("desc") String desc, @RequestParam("file")MultipartFile file) throws IOException {
+        System.out.println(desc);
+        InputStream input = file.getInputStream();
+        String fileName = file.getOriginalFilename();
+
+        OutputStream out = new FileOutputStream("d:\\" + fileName);
+
+        byte[] bytes = new byte[10240];
+        int len = -1;
+        while ((len = input.read(bytes)) != -1){
+            out.write(bytes,0,len);
+        }
+        System.out.println("上传成功");
+        out.close();
+        input.close();
+        return "succeed";
+    }
+
 
 }

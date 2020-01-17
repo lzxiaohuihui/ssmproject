@@ -1,12 +1,18 @@
 package com.lz.mapper;
 
 import com.lz.entity.Order;
-import org.apache.ibatis.annotations.Param;
+import com.lz.entity.Product;
 
 import java.util.List;
+import java.util.Map;
 
 public interface OrderMapper {
-    List<Order> list (int uid);
+    List<Order> listOrder (int uid);
+    List<Product> listProducts (int oid);
+    int queryOid(long no);
     void add(Order order);
-    void delete(@Param("uid") int uid ,@Param("pid") int pid);
+    void addUserAndOrder(Map map);
+    void delete(int oid);
+    void deleteUserAndOrder(int oid);
+    void payed(int oid);
 }
