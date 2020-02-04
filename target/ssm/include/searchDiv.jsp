@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <div class="searchDiv">
-    <input type="text" class="searchItem" placeholder="搜索 天猫 商品/品牌/店铺" name="keyword">
+    <input type="text" class="searchItem" placeholder="装饰用的，还没弄好hiahiahia" name="keyword">
     <button class="searchButton" type="submit">搜索</button>
     <div class="searchBelow">
             <span>

@@ -19,7 +19,7 @@
 
 	
 	<div>
-		<a href="${pageContext.request.contextPath}/payed/${requestScope.total}"><button class="confirmPay">确认支付</button></a>
+		<a href="${pageContext.request.contextPath}/payed/${requestScope.price}"><button class="confirmPay">确认支付</button></a>
 	</div>
 
 </div>

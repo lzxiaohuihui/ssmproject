@@ -1,11 +1,10 @@
 package com.lz.controller;
 
 
-import com.lz.entity.Order;
-import com.lz.entity.Product;
-import com.lz.entity.Review;
-import com.lz.entity.User;
+import com.lz.entity.*;
 import com.lz.service.*;
+import javafx.geometry.Pos;
+import org.junit.runners.Parameterized;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -51,67 +50,6 @@ public class IndexController {
         return "index";
     }
 
-    @RequestMapping(value = "/loginPage", method = {RequestMethod.GET})
-    public String loginUI(HttpServletRequest request) {
-        //在session中保存进入登录之前的页面
-//        HttpSession session = request.getSession();
-        //保存登录前的页面
-//        session.setAttribute("privatePage", request.getHeader("Referer"));
-        return "login";
-    }
-
-    @RequestMapping(value="/login", method= {RequestMethod.POST})
-    public String checkUser(@RequestParam("username") String username, @RequestParam("pwd") String pwd, HttpSession session) {
-        User tempUser = new User(username,pwd);
-        int uid = userService.getUid(tempUser.getUsername());
-        tempUser.setUid(uid);
-        if(userService.isUser(tempUser)){
-            session.setAttribute("user",tempUser);
-            List<Product> cart = cartService.getCartProducts(uid);
-            session.setAttribute("cart", cart);
-            return "redirect:index";
-        }
-        return "login";
-    }
-
-    @ResponseBody
-    @RequestMapping(value = "/forelogout", method = {RequestMethod.POST})
-    public void forelogout(HttpSession session){
-        session.invalidate();
-
-    }
-
-    @ResponseBody
-    @RequestMapping("/checkName")
-    public String checkName(@RequestParam("username") String username ){
-        if(userService.checkName(username)) {
-            return "1";
-        }
-        return "0";
-    }
-
-//    @RequestMapping("/login")
-//    public String login(){
-//        return "login";
-//    }
-    @RequestMapping("/register")
-    public String register(){
-        return "register";
-    }
-
-    @RequestMapping("/registerPage")
-    public String registerPage(@RequestParam("username") String username,
-                               @RequestParam("pwd") String pwd){
-        User temp = new User(username,pwd);
-        userService.addUser(temp);
-        //获得刚刚创建的uid
-        int uid = userService.getUid(username);
-        //为刚刚创建的用户创建购物车
-        userService.createCart(uid);
-
-        return "login";
-    }
-
     @RequestMapping("/item/{pid}")
     public String item(@PathVariable("pid") int pid,Map<String, Object> map){
         Product product = productService.queryProductByPid(pid);
@@ -129,18 +67,22 @@ public class IndexController {
         return "cart";
     }
 
-    @RequestMapping("/addCart/{pid}")
-    public String addCart(@PathVariable("pid") int pid, HttpSession session, HttpServletRequest request){
-
+    @ResponseBody
+    @RequestMapping(value = "/addCart")
+    public int addCart(String pid, String quantity, HttpSession session){
+        int p = Integer.parseInt(pid);
+        int num = Integer.parseInt(quantity);
         User user = (User) session.getAttribute("user");
-        cartService.addCart(user.getUid(),pid);
+        cartService.addCart(user.getUid(),p,num);
+        num += (cartService.getCartProducts(user.getUid())).size();
+
         List<Product> cart = cartService.getCartProducts(user.getUid());
         session.setAttribute("cart", cart);
-
-        return "redirect:"+request.getHeader("Referer");
+        return num;
     }
 
-    @ResponseBody
+
+
     @RequestMapping(value = "/deleteCartProduct", method = {RequestMethod.POST})
     public String deleteCartProuct(HttpServletRequest request){
         int pid = Integer.parseInt(request.getParameter("pid"));
@@ -152,11 +94,32 @@ public class IndexController {
         return "cart";
     }
 
+    @ResponseBody
+    @RequestMapping(value = "/creatOrder")
+    public String creatOrder(String[] pids, String[] nums, HttpSession session){
+        List<Product> products = new ArrayList<>();
+        for(String p:pids){
+            products.add(productService.queryProductByPid(Integer.parseInt(p)));
+        }
+        int sumPrice = 0;
+        for (int i=0; i<products.size();i++){
+            sumPrice += (products.get(i)).getPrice() * Integer.parseInt(nums[i]);
+        }
+        session.setAttribute("price",sumPrice);
+        session.setAttribute("nums",nums);
+        session.setAttribute("products",products);
+        return "true";
+    }
 
 
+
+    @RequestMapping("/buy")
+    public String addOrder(){
+        return "buy";
+    }
 
     @RequestMapping("/buy/{pid}")
-    public String addOrder(@PathVariable("pid") int pid, Map<String, Object> map){
+    public String addOrder1(@PathVariable("pid") int pid, Map<String, Object> map){
         List<Product> products = new ArrayList<>();
         products.add(productService.queryProductByPid(pid));
         float price = (productService.queryProductByPid(pid)).getPrice();
@@ -167,32 +130,38 @@ public class IndexController {
 
 
     @RequestMapping(value = "forecreateOrder", method = {RequestMethod.POST})
-    public String createOrder(HttpSession session,Order order, @RequestParam("pid") int[] pid, Map<String, Object> map,@RequestParam("price") float[] price){
+    public String createOrder(HttpSession session,Order order, Map<String, Object> map){
+        List<Product> products = (List<Product>) session.getAttribute("products");
+        int[] pid = new int[products.size()];
+        for (int i=0; i<products.size(); i++){
+            pid[i] = products.get(i).getPid();
+        }
+        String[] nums = (String[]) session.getAttribute("nums");
+        int [] quantity = new int[nums.length];
+        float total = 0;
+        for (int i=0; i<nums.length; i++){
+            quantity[i] = Integer.parseInt(nums[i]);
+        }
+        for (int i=0; i<nums.length; i++){
+            total += products.get(i).getPrice() * quantity[i];
+        }
         User user = (User) session.getAttribute("user");
         int uid = user.getUid();
         Date date = new Date();
         Timestamp timestamp = new Timestamp(date.getTime());
         long no = timestamp.getTime();
-        float total = 0;
-        for (float p:price){
-            total += p;
-        }
+
         order.setUid(uid);
         order.setDate(timestamp);
         order.setNo(no);
         order.setPrice(total);
-        orderService.addOrder(order, pid);
+        orderService.addOrder(order, pid, quantity);
         map.put("price", total);
         return "pay";
     }
-//    @RequestMapping("forecreateOrder/{total}")
-//    public String Order(@PathVariable("total") String total, Map<String, Object> map){
-//        map.put("total",total);
-//        return "pay";
-//    }
 
-    @RequestMapping("payed/{total}")
-    public String payed(@PathVariable("total") String total, Map<String, Object> map){
+    @RequestMapping("/payed")
+    public String payed(@RequestParam("total") String total, Map<String, Object> map){
         map.put("total",total);
         return "payed";
     }
@@ -200,12 +169,14 @@ public class IndexController {
     public String order(Map<String, Object> map, HttpSession session){
         User user = (User) session.getAttribute("user");
         List<Order> orders = orderService.queryAllOrder(user.getUid());
-        List<List<Product>> products = new ArrayList<>();
+
+        List<List<Order_item>> orderItems = new ArrayList<>();
 
         for( Order order: orders) {
-            products.add(orderService.queryOrderProduct(order.getOid()));
+            orderItems.add(orderService.queryOrderItem(order.getOid()));
         }
-        map.put("products",products);
+
+        map.put("orderItems",orderItems);
         map.put("orders",orders);
 
         return "order";
@@ -228,6 +199,7 @@ public class IndexController {
         input.close();
         return "succeed";
     }
+
 
 
 }

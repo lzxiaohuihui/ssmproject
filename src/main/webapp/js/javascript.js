@@ -1,63 +1,11 @@
-$(function(){
-    $("input.sortBarPrice").keyup(function(){
-        var num= $(this).val();
-        if(num.length==0){
-            $("div.productUnit").show();
-            return;
-        }
-
-        num = parseInt(num);
-        if(isNaN(num))
-            num= 1;
-        if(num<=0)
-            num = 1;
-        $(this).val(num);
-
-        var begin = $("input.beginPrice").val();
-        var end = $("input.endPrice").val();
-        if(!isNaN(begin) && !isNaN(end)){
-            $("div.productUnit").hide();
-            $("div.productUnit").each(function(){
-                var price = $(this).attr("price");
-                price = new Number(price);
-                if(price<=end && price>=begin)
-                    $(this).show();
-            });
-        }
-
-    });
-});
-
-$(function(){
-    $("input.searchItem").keyup(function(){
-        var searchName = $(this).val();
-        if(searchName == null){
-            $("div.productUnit").show();
-            return;
-        }
-
-        if(searchName!=null){
-            $("div.productUnit").hide();
-            $("div.productUnit").each(function(){
-                var name = $(this).attr("name");
-                name = new String(name);
-                if(name.indexOf(searchName)!=-1)
-                    $(this).show();
-            });
-        }
-
-    });
-});
-
-
-
-
+//item 页面的大图
 $(function(){
     $("img.smallImg").mouseenter(function(){
         var bigImageURL = $(this).attr("src");
         $("img.bigImg").attr("src",bigImageURL);
     });
 });
+//item页面的产品数量
 $(function(){
     var stock = 100;
     $(".productNumberSetting").keyup(function(){
@@ -91,69 +39,12 @@ $(function(){
 
 
 
-function formatMoney(num){
-    num = num.toString().replace(/\$|\,/g,'');
-    if(isNaN(num))
-        num = "0";
-    sign = (num == (num = Math.abs(num)));
-    num = Math.floor(num*100+0.50000000001);
-    cents = num%100;
-    num = Math.floor(num/100).toString();
-    if(cents<10)
-        cents = "0" + cents;
-    for (var i = 0; i < Math.floor((num.length-(1+i))/3); i++)
-        num = num.substring(0,num.length-(4*i+3))+','+
-            num.substring(num.length-(4*i+3));
-    return (((sign)?'':'-') + num + '.' + cents);
-}
-
-
 //购物车页面
 $(function(){
-    $("img.cartProductItemIfSelected").click(function(){
-        var selectit = $(this).attr("selectit")
-        if("selectit"==selectit){
-            $(this).attr("src","http://how2j.cn/tmall/img/site/cartNotSelected.png");
-            $(this).attr("selectit","false")
-            $(this).parents("tr.cartProductItemTR").css("background-color","#fff");
-        }
-        else{
-            $(this).attr("src","http://how2j.cn/tmall/img/site/cartSelected.png");
-            $(this).attr("selectit","selectit")
-            $(this).parents("tr.cartProductItemTR").css("background-color","#FFF8E1");
-        }
-        syncSelect();
-        syncCreateOrderButton();
-        calcCartSumPriceAndNumber();
-    });
-    $("img.selectAllItem").click(function(){
-        var selectit = $(this).attr("selectit")
-        if("selectit"==selectit){
-            $("img.selectAllItem").attr("src","http://how2j.cn/tmall/img/site/cartNotSelected.png");
-            $("img.selectAllItem").attr("selectit","false")
-            $(".cartProductItemIfSelected").each(function(){
-                $(this).attr("src","http://how2j.cn/tmall/img/site/cartNotSelected.png");
-                $(this).attr("selectit","false");
-                $(this).parents("tr.cartProductItemTR").css("background-color","#fff");
-            });
-        }
-        else{
-            $("img.selectAllItem").attr("src","http://how2j.cn/tmall/img/site/cartSelected.png");
-            $("img.selectAllItem").attr("selectit","selectit")
-            $(".cartProductItemIfSelected").each(function(){
-                $(this).attr("src","http://how2j.cn/tmall/img/site/cartSelected.png");
-                $(this).attr("selectit","selectit");
-                $(this).parents("tr.cartProductItemTR").css("background-color","#FFF8E1");
-            });
-        }
-        syncCreateOrderButton();
-        calcCartSumPriceAndNumber();
-    });
-    $(".orderItemNumberSetting").keyup(function(){
-        var pid=$(this).attr("pid");
-        var stock= $("span.orderItemStock[pid="+pid+"]").text();
-        var price= $("span.orderItemPromotePrice[pid="+pid+"]").text();
-        var num= $(".orderItemNumberSetting[pid="+pid+"]").val();
+    $(".orderItemNumberSetting").keyup(function () {
+        var pid = $(this).attr("pid");
+        var stock = $(this).attr("stock");
+        var num = $(".orderItemNumberSetting[pid="+pid+"]").val();
         num = parseInt(num);
         if(isNaN(num))
             num= 1;
@@ -161,125 +52,181 @@ $(function(){
             num = 1;
         if(num>stock)
             num = stock;
-        syncPrice(pid,num,price);
+        $(".orderItemNumberSetting[pid="+pid+"]").val(num);
+        calPrice(pid,num);
+        calSumPrice();
     });
-    $(".numberPlus").click(function(){
-        var pid=$(this).attr("pid");
-        var stock= $("span.orderItemStock[pid="+pid+"]").text();
-        var price= $("span.orderItemPromotePrice[pid="+pid+"]").text();
-        var num= $(".orderItemNumberSetting[pid="+pid+"]").val();
+
+    $(".numberPlus").click(function () {
+        var pid = $(this).attr("pid");
+        var stock = $(this).attr("stock");
+        var num = $("input.orderItemNumberSetting[pid="+pid+"]").val();
         num++;
         if(num>stock)
             num = stock;
-        syncPrice(pid,num,price);
-    });
-    $(".numberMinus").click(function(){
-        var pid=$(this).attr("pid");
-        var stock= $("span.orderItemStock[pid="+pid+"]").text();
-        var price= $("span.orderItemPromotePrice[pid="+pid+"]").text();
-        var num= $(".orderItemNumberSetting[pid="+pid+"]").val();
-        --num;
-        if(num<=0)
-            num=1;
-        syncPrice(pid,num,price);
+        $("input.orderItemNumberSetting[pid="+pid+"]").val(num);
+        calPrice(pid,num);
+        calSumPrice();
     });
 
-})
-function syncCreateOrderButton(){
-    var selectAny = false;
-    $(".cartProductItemIfSelected").each(function(){
-        if("selectit"==$(this).attr("selectit")){
-            selectAny = true;
+    $(".numberMinus").click(function () {
+        var pid = $(this).attr("pid");
+        var num = $(".orderItemNumberSetting[pid="+pid+"]").val();
+        num--;
+        if(num == 0)
+            num = 1;
+        $(".orderItemNumberSetting[pid="+pid+"]").val(num);
+        calPrice(pid,num);
+        calSumPrice();
+    });
+
+    $(".cartProductItemIfSelected").click(function () {
+        var oid = $(this).attr("oiid");
+        var isSelected = $(this).attr("selectit");
+        if(isSelected == "false") {
+            $(".cartProductItemTR[oid=" + oid + "]").attr("style","background-color:#FFC0CB");
+            $(this).attr("src","http://how2j.cn/tmall/img/site/cartSelected.png");
+            $(this).attr("selectit","true");
+        }else{
+            $(".cartProductItemTR[oid=" + oid + "]").attr("style","background-color:white");
+            $(this).attr("src","http://how2j.cn/tmall/img/site/cartNotSelected.png");
+            $(this).attr("selectit","false");
+        }
+        calSumPrice();
+        isSelect();
+        calProductNum();
+    });
+    $(".selectAllItem").click(function () {
+        var isAllSelected = false;
+        $(".cartProductItemIfSelected").each(function () {
+            if ( $(this).attr("selectit") == "true") {
+                isAllSelected = true
+            }
+        });
+        if (!isAllSelected){
+            $(".cartProductItemTR").each(function () {
+                var oid = $(this).attr("oid");
+                $(this).attr("style","background-color:#FFC0CB");
+                $(".cartProductItemIfSelected[oiid="+oid+"]").attr("src","http://how2j.cn/tmall/img/site/cartSelected.png");
+                $(".cartProductItemIfSelected[oiid="+oid+"]").attr("selectit","true");
+                $(".selectAllItem").attr("src","http://how2j.cn/tmall/img/site/cartSelected.png");
+            });
+        }else{
+            $(".cartProductItemTR").each(function () {
+                var oid = $(this).attr("oid");
+                $(this).attr("style","background-color:white");
+                $(".cartProductItemIfSelected[oiid="+oid+"]").attr("src","http://how2j.cn/tmall/img/site/cartNotSelected.png");
+                $(".cartProductItemIfSelected[oiid="+oid+"]").attr("selectit","false");
+                $(".selectAllItem").attr("src","http://how2j.cn/tmall/img/site/cartNotSelected.png");
+            });
+        }
+        calSumPrice();
+        isSelect();
+        calProductNum();
+    });
+
+    $(".createOrderButton").click(function () {
+        var pids = new Array();
+        var nums = new Array();
+        var temp = $(".cartSumPrice").text();
+        var sum = temp.substr(1,temp.length-1);
+        $(".cartProductItemIfSelected").each(function () {
+            var oid = $(this).attr("oiid");
+            if( $(this).attr("selectit") == "true"){
+                var text = $(".cartProductItemSmallSumPrice[pid="+oid+"]").text();
+                var sumPrice = text.substr(1,text.length-1);
+                var price = $(".orderItemPromotePrice[pid="+oid+"]").text();
+                pids.push(oid);
+                nums.push(((new Number(sumPrice))/(new Number(price))).toString());
+            }
+        });
+        $.ajax({
+            url:"creatOrder",
+            type:"post",
+            dataType:"json",
+            async:false,
+            data:{pids:pids,nums:nums},
+            traditional:true,
+            success:function (result) {
+                window.location.href = "buy";
+            }
+        });
+    });
+
+
+
+});
+function calProductNum() {
+    var num = 0;
+    $(".cartProductItemIfSelected").each(function () {
+        if ($(this).attr("selectit") == "true") {
+            num ++;
         }
     });
-    if(selectAny){
-        $("button.createOrderButton").css("background-color","#C40000");
+    $(".cartSumNumber").text(num);
+}
+
+function isSelect() {
+    var isSelect = false
+    $(".cartProductItemIfSelected").each(function () {
+        if ($(this).attr("selectit") == "true") {
+            isSelect = true;
+        }
+    });
+    if (isSelect) {
+        $("button.createOrderButton").attr("style", "background-color:#C40000");
         $("button.createOrderButton").removeAttr("disabled");
-    }
-    else{
-        $("button.createOrderButton").css("background-color","#AAAAAA");
-        $("button.createOrderButton").attr("disabled","disabled");
+    } else {
+        $("button.createOrderButton").attr("style", "background-color:#AAAAAA");
+        $("button.createOrderButton").attr("disabled", "disabled");
     }
 }
-function syncSelect(){
-    var selectAll = true;
-    $(".cartProductItemIfSelected").each(function(){
-        if("false"==$(this).attr("selectit")){
-            selectAll = false;
+function calSumPrice(){
+    var sumPrice = 0;
+    $(".cartProductItemSmallSumPrice").each(function () {
+        var pid = $(this).attr("pid");
+        if ($(".cartProductItemIfSelected[oiid="+pid+"]").attr("selectit") == "true"){
+            var text = $(this).text();
+            var strPrice = text.substr(1,text.length-1);
+            var price = new Number(strPrice);
+            sumPrice += price;
         }
+
     });
-    if(selectAll)
-        $("img.selectAllItem").attr("src","http://how2j.cn/tmall/img/site/cartSelected.png");
-    else
-        $("img.selectAllItem").attr("src","http://how2j.cn/tmall/img/site/cartNotSelected.png");
+    $(".cartSumPrice").text("￥"+sumPrice);
+    $(".cartTitlePrice").text("￥"+sumPrice);
+
 }
-function calcCartSumPriceAndNumber(){
-    var sum = 0;
-    var totalNumber = 0;
-    $("img.cartProductItemIfSelected[selectit='selectit']").each(function(){
-        var oiid = $(this).attr("oiid");
-        var price =$(".cartProductItemSmallSumPrice[oiid="+oiid+"]").text();
-        price = price.replace(/,/g, "");
-        price = price.replace(/￥/g, "");
-        sum += new Number(price);
-        var num =$(".orderItemNumberSetting[oiid="+oiid+"]").val();
-        totalNumber += new Number(num);
-    });
-    $("span.cartSumPrice").html("￥"+formatMoney(sum));
-    $("span.cartTitlePrice").html("￥"+formatMoney(sum));
-    $("span.cartSumNumber").html(totalNumber);
-}
-function syncPrice(pid,num,price){
-    $(".orderItemNumberSetting[pid="+pid+"]").val(num);
-    var cartProductItemSmallSumPrice = formatMoney(num*price);
-    $(".cartProductItemSmallSumPrice[pid="+pid+"]").html("￥"+cartProductItemSmallSumPrice);
-    calcCartSumPriceAndNumber();
+
+function calPrice(pid,num) {
+    var price = $(".orderItemPromotePrice[pid="+pid+"]").text();
+    $(".cartProductItemSmallSumPrice[pid="+pid+"]").text("￥"+num*price);
 }
 
 
 //订单页面
 $(function(){
-    $("a[orderStatus]").click(function(){
-        var orderStatus = $(this).attr("orderStatus");
-        if('all'==orderStatus){
-            $("table[orderStatus]").show();
-        }
-        else{
-            $("table[orderStatus]").hide();
-            $("table[orderStatus="+orderStatus+"]").show();
-        }
-        $("div.orderType div").removeClass("selectedOrderType");
-        $(this).parent("div").addClass("selectedOrderType");
+    $("tbody:gt(0)").each(function (i) {
+        $(this).children(".orderItemProductInfoPartTR:gt(0)").each(function () {
+            $(this).children("td.orderListItemProductRealPriceTD,td.orderListItemButtonTD").remove();
+        });
     });
-    $("a.deleteOrderLink").click(function(){
-        deleteOrderid = $(this).attr("oid");
-        deleteOrder = false;
-        $("#deleteConfirmModal").modal("show");
+
+    $("tbody:gt(0)").each(function (i) {
+        var orderPrice = new Number();
+        $(this).children(".orderItemProductInfoPartTR").each(function () {
+            //console.log($(this).find(".orderListItemProductPrice").text());
+            var text = $(this).find(".orderListItemProductPrice").text();
+            var price = new Number(text.substr(1,text.length-1));
+            var num = new Number($(this).find(".orderListItemNumber").text());
+            orderPrice += num*price;
+        });
+        $(this).find(".orderListItemProductRealPrice").text("￥"+orderPrice);
     });
-    $("button.deleteConfirmButton").click(function(){
-        deleteOrder = true;
-        $("#deleteConfirmModal").modal('hide');
-    });
-    $('#deleteConfirmModal').on('hidden.bs.modal', function (e) {
-        if(deleteOrder){
-            var page="foredeleteOrder";
-            $.post(
-                page,
-                {"oid":deleteOrderid},
-                function(result){
-                    if("success"==result){
-                        $("table.orderListItemTable[oid="+deleteOrderid+"]").hide();
-                    }
-                    else{
-                        location.href="login.jsp";
-                    }
-                }
-            );
-        }
-    })
+
 });
 
-
+//注销
 $(document).ready(function(){
     $("#forelogout").click(function(){
         //通过ajax请求springmvc
@@ -290,9 +237,21 @@ $(document).ready(function(){
             }
         );
     });
+    //加入购物车
+    $("#addCartButton").click(function(){
+        $.post(
+            "../addCart",
+            {pid:$(this).attr("name"),quantity:$("#productNumber").val()},
+            function(result) {
+                $("#cartSize").text(result);
+            }
+        );
+    });
+
+
 });
 
-
+//删除订单
 $(document).ready(function(){
     $(".deleteOrderItem").click(function(){
         $.post(
@@ -304,3 +263,4 @@ $(document).ready(function(){
         );
     });
 });
+

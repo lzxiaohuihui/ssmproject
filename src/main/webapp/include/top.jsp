@@ -32,7 +32,7 @@
                     <a href="${pageContext.request.contextPath}/order">我的订单</a>
                     <a href="${pageContext.request.contextPath}/cart">
                     <span class=" glyphicon glyphicon-shopping-cart redColor" ></span>
-                    购物车<strong>
+                    购物车<strong id="cartSize">
                         <c:choose>
                             <c:when test="${empty user}">0</c:when>
                             <c:when test="${!empty user}">${sessionScope;cart.size()}</c:when>

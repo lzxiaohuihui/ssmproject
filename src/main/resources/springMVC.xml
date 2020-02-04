@@ -45,5 +45,9 @@
 
     </mvc:interceptors>
 
+    <!-- 该注解 会让 springmvc： 接收一个请求，并且该请求 没有对应的@requestmapping时，
+    将该请求 交给服务器默认的servlet去处理（直接访问）  -->
+    <mvc:default-servlet-handler></mvc:default-servlet-handler>
+
 
 </beans>

@@ -28,7 +28,7 @@
 
 <c:forEach var="product" items="${requestScope.products}" >
 
-            <tr class="cartProductItemTR" oid="${product.pid}" style="background-color: rgb(255, 255, 255);">
+            <tr class="cartProductItemTR" oid="${product.pid}">
                 <td>
                     <img src="http://how2j.cn/tmall/img/site/cartNotSelected.png" class="cartProductItemIfSelected" oiid="${product.pid}" selectit="false" alt="">
                     <a href="#nowhere" style="display:none"><img src="http://how2j.cn/tmall/img/site/cartSelected.png"></a>
@@ -49,17 +49,15 @@
                 </td>
                 <td>
                     <div class="cartProductChangeNumberDiv">
-                        <span pid="365" class="hidden orderItemStock ">75</span>
-                        <span pid="365" class="hidden orderItemPromotePrice ">${product.price}</span>
-                        <a href="#nowhere" class="numberMinus" pid="365">-</a>
-                        <input value="1" autocomplete="off" class="orderItemNumberSetting" oiid="${product.pid}" pid="365">
-                        <a href="#nowhere" class="numberPlus" pid="365" stock="75">+</a>
+                        <span pid="${product.pid}" class="hidden orderItemStock ">${product.getStock()}</span>
+                        <span pid="${product.pid}" class="hidden orderItemPromotePrice ">${product.price}</span>
+                        <a href="#nowhere" class="numberMinus" pid="${product.pid}">-</a>
+                        <input value="1" autocomplete="off" class="orderItemNumberSetting" oiid="${product.pid}" pid="${product.pid}">
+                        <a href="#nowhere" class="numberPlus" pid="${product.pid}" stock="${product.getStock()}">+</a>
                     </div>
                 </td>
                 <td>
-                            <span pid="365" oiid="${product.pid}" class="cartProductItemSmallSumPrice">
-                            ￥${product.price}
-                            </span>
+                            <span pid="${product.pid}" class="cartProductItemSmallSumPrice">￥${product.price}</span>
                 </td>
                 <td>
                     <a href="#" oiid="${product.pid}" class="deleteOrderItem">删除</a>
@@ -78,7 +76,7 @@
             <span>已选商品 <span class="cartSumNumber">0</span> 件</span>
             <span>合计 (不含运费): </span>
             <span class="cartSumPrice">￥0.00</span>
-            <button class="createOrderButton" style="background-color: rgb(170, 170, 170);" disabled="disabled">结  算</button>
+            <button class="createOrderButton" disabled="disabled">结  算</button>
         </div>
     </div>
 </div>

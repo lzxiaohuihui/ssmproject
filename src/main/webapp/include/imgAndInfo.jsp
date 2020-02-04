@@ -67,7 +67,7 @@
             <span>数量</span>
             <span>
 				<span class="productNumberSettingSpan">
-				<input type="text" value="1" class="productNumberSetting">
+				<input type="text" value="1" class="productNumberSetting" id="productNumber">
 				</span>
 				<span class="arrow">
 					<a class="increaseNumber" href="#">
@@ -97,7 +97,7 @@
 
         <div class="buyDiv">
             <a href="${pageContext.request.contextPath}/buy/${product.pid}" class="buyLink"><button class="buyButton">立即购买</button></a>
-            <a class="addCartLink" href="${pageContext.request.contextPath}/addCart/${product.pid}"><button class="addCartButton"><span class="glyphicon glyphicon-shopping-cart"></span>加入购物车</button></a>
+            <a class="addCartLink"><button  id="addCartButton" name="${product.getPid()}" class="addCartButton"><span class="glyphicon glyphicon-shopping-cart"></span>加入购物车</button></a>
         </div>
     </div>
 </div>

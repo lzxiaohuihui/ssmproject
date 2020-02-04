@@ -15,9 +15,10 @@
     </select>
 
     <insert id="add" parameterType="int">
-        insert into cart_item (cid,pid) values (
+        insert into cart_item (cid,pid,quantity) values (
             (select cid from cart where uid = #{uid}),
-            (#{pid})
+            (#{pid}),
+            (#{quantity})
         )
     </insert>
 

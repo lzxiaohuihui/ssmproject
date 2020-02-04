@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/order.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap/3.3.6/bootstrap.min.css">
     <script src="${pageContext.request.contextPath}/js/bootstrap/3.3.6/bootstrap.min.js"></script>
+    <script src="${pageContext.request.contextPath}/js/javascript.js"></script>
     <title>我的订单</title>
 </head>
 <body>

@@ -33,8 +33,8 @@
         <table oid="946" orderstatus="waitReview" class="orderListItemTable" style="display: table;">
             <tbody><tr class="orderListItemFirstTR">
                 <td colspan="2">
-                    <b>${requestScope;(orders.get(i)).getDate()}</b>
-                    <span>${requestScope;(orders.get(i)).getNo()}
+                    <b>${requestScope;(orders.get(orders.size()-1-i)).getDate()}</b>
+                    <span>${requestScope;(orders.get(orders.size()-1-i)).getNo()}
 					</span>
                 </td>
 
@@ -46,19 +46,19 @@
                 </td>
 
                 <td class="orderItemDeleteTD">
-                    <a href="#nowhere" oid="${requestScope;(orders.get(i)).getOid()}" class="deleteOrderLink">
+                    <a href="#nowhere" oid="${requestScope;(orders.get(orders.size()-1-i)).getOid()}" class="deleteOrderLink">
                         <span class="orderListItemDelete glyphicon glyphicon-trash"></span>
                     </a>
                 </td>
             </tr>
 
 
+            <c:forEach var="orderItem" items="${requestScope;orderItems.get(orders.size()-1-i)}">
             <tr class="orderItemProductInfoPartTR">
-                <c:forEach var="product" items="${requestScope;products.get(i)}">
-                <td class="orderItemProductInfoPartTD"><img width="80" height="80" src="img/item/${product.pid*5}.jpg"></td>
+                <td class="orderItemProductInfoPartTD"><img width="80" height="80" src="${pageContext.request.contextPath}/img/item/${(orderItem.product.pid)*5}.jpg"></td>
                 <td class="orderItemProductInfoPartTD">
                     <div class="orderListItemProductLinkOutDiv">
-                        <a href="${pageContext.request.contextPath}/item/${product.pid}">${product.name}</a>
+                        <a href="${pageContext.request.contextPath}/item/${orderItem.product.pid}">${orderItem.product.name}</a>
                         <div class="orderListItemProductLinkInnerDiv">
                             <img title="支持信用卡支付" src="http://how2j.cn/tmall/img/site/creditcard.png">
                             <img title="消费者保障服务,承诺7天退货" src="http://how2j.cn/tmall/img/site/7day.png">
@@ -67,18 +67,18 @@
                     </div>
                 </td>
                 <td width="100px" class="orderItemProductInfoPartTD">
-                    <div class="orderListItemProductPrice">￥${product.price}</div>
+                    <div class="orderListItemProductPrice">￥${orderItem.product.price}</div>
                 </td>
 
 
                 <td width="100px" valign="top" class="orderListItemNumberTD orderItemOrderInfoPartTD" rowspan="1">
-                    <span class="orderListItemNumber">1</span>
+                    <span class="orderListItemNumber">${orderItem.quantity}</span>
                 </td>
-                <td width="120px" valign="top" class="orderListItemProductRealPriceTD orderItemOrderInfoPartTD" rowspan="1">
-                    <div class="orderListItemProductRealPrice">￥00</div>
+                <td width="120px" valign="top" class="orderListItemProductRealPriceTD orderItemOrderInfoPartTD" rowspan="${orderItems.size()}">
+                    <div class="orderListItemProductRealPrice">￥${orderItem.quantity * orderItem.product.price}</div>
                     <div class="orderListItemPriceWithTransport">(含运费：￥0.00)</div>
                 </td>
-                <td width="100px" valign="top" class="orderListItemButtonTD orderItemOrderInfoPartTD" rowspan="1">
+                <td width="100px" valign="top" class="orderListItemButtonTD orderItemOrderInfoPartTD" rowspan="${orderItems.size()}">
                     <a href="#nowhere">
                         <button class="orderListItemReview">评价</button>
                     </a>

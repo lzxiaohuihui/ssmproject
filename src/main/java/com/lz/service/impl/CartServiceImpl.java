@@ -20,8 +20,8 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public void addCart(int uid, int pid) {
-        cartMapper.add(uid,pid);
+    public void addCart(int uid, int pid, int quantity) {
+        cartMapper.add(uid,pid, quantity);
     }
 
     @Override

@@ -19,13 +19,28 @@
     <select id="queryOid" parameterType="long" resultType="int">
         select oid from order_ where no = #{no}
     </select>
+
+    <select id="listOrderItem" parameterType="int" resultMap="OrderItem">
+        SELECT * FROM product, order_item WHERE product.`pid` = order_item.`pid` AND order_item.oid = #{oid}
+    </select>
+
+    <resultMap id="OrderItem" type="com.lz.entity.Order_item">
+            <id property="product.pid" column="pid"/>
+            <result property="product.name" column="name"></result>
+            <result property="product.price" column="price"></result>
+            <result property="product.stock" column="stock"></result>
+            <result property="product.sales" column="sales"></result>
+            <result property="product.reviews" column="reviews"></result>
+            <result property="oid" column="oid"></result>
+            <result property="quantity" column="quantity"></result>
+    </resultMap>
     
     <insert id="add" parameterType="com.lz.entity.Order">
         insert into order_ (uid,date,no,address,post,receiver,mobile,price) values(#{uid},#{date},#{no},#{address},#{post},#{receiver},#{mobile},#{price})
     </insert>
 
     <insert id="addUserAndOrder" parameterType="map">
-        insert into order_item(oid,pid) values(#{oid}, #{pid})
+        insert into order_item(oid,pid,quantity) values(#{oid}, #{pid}, #{quantity})
     </insert>
 
     <delete id="delete" parameterType="int">

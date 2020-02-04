@@ -16,8 +16,8 @@
   <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap/3.3.6/bootstrap.min.css">
   <script src="${pageContext.request.contextPath}/js/bootstrap/3.3.6/bootstrap.min.js"></script>
 
-  <link rel="stylesheet" href="css/style.css">
-  <script src="js/javascript.js"></script>
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+  <script src="${pageContext.request.contextPath}/js/javascript.js"></script>
 
 
   <title>天狗</title>

@@ -1,6 +1,7 @@
 package com.lz.mapper;
 
 import com.lz.entity.Order;
+import com.lz.entity.Order_item;
 import com.lz.entity.Product;
 
 import java.util.List;
@@ -9,6 +10,7 @@ import java.util.Map;
 public interface OrderMapper {
     List<Order> listOrder (int uid);
     List<Product> listProducts (int oid);
+    List<Order_item> listOrderItem(int oid);
     int queryOid(long no);
     void add(Order order);
     void addUserAndOrder(Map map);

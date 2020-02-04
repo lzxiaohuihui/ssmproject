@@ -50,7 +50,7 @@
 			<thead>
 				<tr>
 					<th colspan="2" class="productListTableFirstColumn">
-						<img class="tmallbuy" src="../img/site/tmallbuy.png">
+						<img class="tmallbuy" src="${pageContext.request.contextPath}/img/site/tmallbuy.png">
 						<a class="marketLink" href="#nowhere">店铺：天猫店铺</a>
 						<a class="wangwanglink" href="#nowhere"> <span class="wangwangGif"></span> </a>
 					</th>
@@ -69,35 +69,33 @@
 			</thead>
 			<tbody class="productListTableTbody">
 
-				<c:forEach var="product" items="${requestScope.products}">
+				<c:forEach var="i" begin="0" end="${products.size()-1}" >
 					<tr class="orderItemTR">
-						<td class="orderItemFirstTD"><img class="orderItemImg" src="../img/item/${product.pid*5}.jpg"></td>
+						<td class="orderItemFirstTD"><img class="orderItemImg" src="${pageContext.request.contextPath}/img/item/${(products.get(i)).pid*5}.jpg"></td>
 						<td class="orderItemProductInfo" >
 
-						<a href="${pageContext.request.contextPath}/item/${product.pid}" class="orderItemProductLink">
-							${product.name}
+						<a href="${pageContext.request.contextPath}/item/${(products.get(i)).pid}" class="orderItemProductLink">
+							${(products.get(i)).name}
 						</a>
 
-						<img src="../img/site/creditcard.png" title="支持信用卡支付">
-						<img src="../img/site/7day.png" title="消费者保障服务,承诺7天退货">
-						<img src="../img/site/promise.png" title="消费者保障服务,承诺如实描述">
+						<img src="${pageContext.request.contextPath}/img/site/creditcard.png" title="支持信用卡支付">
+						<img src="${pageContext.request.contextPath}/img/site/7day.png" title="消费者保障服务,承诺7天退货">
+						<img src="${pageContext.request.contextPath}/img/site/promise.png" title="消费者保障服务,承诺如实描述">
 
 						</td>
 						<td>
 
-						<span class="orderItemProductPrice">￥${product.price}</span>
+						<span class="orderItemProductPrice">￥${(products.get(i)).price}</span>
 						</td>
 						<td>
-						<span class="orderItemProductNumber">1</span>
+						<span class="orderItemProductNumber">${nums[i]}</span>
 						</td>
-						<td><span class="orderItemUnitSum">
-						￥${product.price}
-						</span></td>
-							<td rowspan="5"  class="orderItemLastTD">
-						<label class="orderItemDeliveryLabel">
-							<input type="radio" value="" checked="checked">
-							普通配送
-						</label>
+						<td><span class="orderItemUnitSum">￥${((products.get(i)).price) * Integer.parseInt(nums[i])}</span></td>
+						<td rowspan="1"  class="orderItemLastTD">
+							<label class="orderItemDeliveryLabel">
+								<input type="radio" value="" checked="checked">
+								普通配送
+							</label>
 
 						<select class="orderItemDeliverySelect" class="form-control">
 							<option>快递 免邮费</option>
@@ -105,10 +103,6 @@
 
 						</td>
 
-						<td>
-							<input name="pid" value="${product.getPid()}" hidden/>
-							<input name="price" value="${product.getPrice()}" hidden/>
-						</td>
 					</tr>
 				</c:forEach>
 
@@ -119,28 +113,25 @@
 			<div class="pull-left">
 				<span class="leaveMessageText">给卖家留言:</span>
 				<span>
-					<img class="leaveMessageImg" src="../img/site/leaveMessage.png">
+					<img class="leaveMessageImg" src="${pageContext.request.contextPath}/img/site/leaveMessage.png">
 				</span>
 				<span class="leaveMessageTextareaSpan">
-					<textarea name="userMessage" class="leaveMessageTextarea"></textarea>
+					<textarea name="userMessage" class="leaveMessageTextarea" placeholder="尽管你写，我理你算我输!"></textarea>
 					<div>
 						<span>还可以输入200个字符</span>
 					</div>
 				</span>
 			</div>
 
-			<span class="pull-right">店铺合计(含运费): ￥${requestScope.price}</span>
+			<span class="pull-right storePrice">店铺合计(含运费): 加载中...</span>
 		</div>
-
-
-
 
 	</div>
 
 	<div class="orderItemTotalSumDiv">
 		<div class="pull-right">
 			<span>实付款：</span>
-			<label class="orderItemTotalSumSpan" name="price">￥${requestScope.price}</label>
+			<label class="orderItemTotalSumSpan">加载中...</label>
 		</div>
 	</div>
 

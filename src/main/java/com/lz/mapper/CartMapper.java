@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface CartMapper {
     List<Product> list(int uid);
-    void add(@Param("uid") int uid,@Param("pid") int pid);
+    void add(@Param("uid") int uid,@Param("pid") int pid, @Param("quantity") int quantity);
     void delete (@Param("uid") int uid,@Param("pid") int pid);
 }

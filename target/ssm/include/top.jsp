@@ -32,22 +32,13 @@
                     <a href="${pageContext.request.contextPath}/order">我的订单</a>
                     <a href="${pageContext.request.contextPath}/cart">
                     <span class=" glyphicon glyphicon-shopping-cart redColor" ></span>
-                    购物车<strong>0</strong>件</a>
+                    购物车<strong id="cartSize">
+                        <c:choose>
+                            <c:when test="${empty user}">0</c:when>
+                            <c:when test="${!empty user}">${sessionScope;cart.size()}</c:when>
+                        </c:choose>
+                    </strong>件</a>
                 </span>
 </nav>
 
-<script>
-    $(document).ready(function(){
-        $("#forelogout").click(function(){
-            //通过ajax请求springmvc
-            $.post(
-                "forelogout",//服务器地址
-                function(result){//服务端处理完毕后的回调函数 List<Student> students， 加上@ResponseBody后， students实质是一个json数组的格式
-                    alert("bye~");
-                }
-            );
-        });
 
-    });
-
-</script>
