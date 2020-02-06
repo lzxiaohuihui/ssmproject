@@ -1117,7 +1117,7 @@ table.confirmPayOrderDetailTable td {
     color: black;
     font-size: 14px;
 }
-button.orderListItemReview {
+.orderItemStatus {
     border: 1px solid #DCDCDC;
     background-color: #fff;
     border-radius: 2px;

@@ -19,7 +19,7 @@
 			</div>
 			<div class="productReviewItemUserInfo">
 			
-				${review.uid}<span class="userInfoGrayPart"></span>
+				${review.username}<span class="userInfoGrayPart"></span>
 			</div>
 			
 			<div style="clear:both"></div>

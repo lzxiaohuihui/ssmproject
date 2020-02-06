@@ -12,8 +12,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script src="${pageContext.request.contextPath}/js/jquery/2.0.0/jquery.min.js"></script>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/item.css">
+    <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+    <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/item.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap/3.3.6/bootstrap.min.css">
     <script src="${pageContext.request.contextPath}/js/bootstrap/3.3.6/bootstrap.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/javascript.js"></script>

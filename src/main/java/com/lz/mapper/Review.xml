@@ -6,7 +6,7 @@
 
 <mapper namespace="com.lz.mapper.ReviewMapper">
     <insert id="addReview" parameterType="com.lz.entity.Review">
-        insert into review values(#{review.pid},(#{review.uid},(#{review.content},(#{review.date})
+        insert into review values(#{pid},#{username},#{content},#{date})
     </insert>
 
     <select id="queryReview" parameterType="int" resultType="com.lz.entity.Review">

@@ -51,8 +51,12 @@
         delete from order_item where oid = #{oid}
     </delete>
 
-    <update id="payed" parameterType="int">
-        update order_ set ispay = 1 where oid = #{oid}
+    <update id="setStatus" parameterType="int">
+        update order_ set status = #{status} where oid = #{oid}
     </update>
+
+    <select id="queryStatus" parameterType="int" resultType="int">
+        select status from order_ where oid = #{oid}
+    </select>
 
 </mapper>

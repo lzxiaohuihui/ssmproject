@@ -11,6 +11,7 @@ public interface OrderService {
     void addOrder(Order order, int[] pid, int[] quantity);
     void deleteOrder(int oid);
     List<Product> queryOrderProduct(int oid);
-    void payed(int oid);
     List<Order_item> queryOrderItem(int oid);
+    int queryOrderStatus(int oid);
+    void changeOrderStatus(int oid, int status);
 }

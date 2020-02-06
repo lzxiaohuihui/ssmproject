@@ -224,6 +224,133 @@ $(function(){
         $(this).find(".orderListItemProductRealPrice").text("￥"+orderPrice);
     });
 
+    $(".orderType>div:not(.orderTypeLastOne)").click(function () {
+        $(".orderType>div").each(function () {
+            $(this).removeClass("selectedOrderType");
+        });
+        $(this).addClass("selectedOrderType");
+
+        $(".orderListItemTable").each(function () {
+            $(this).attr("style","display: none;");
+        });
+        var type = $(this).children("a").attr("orderstatus");
+        if (type == "waitPay"){
+            $(".orderListItemTable").each(function () {
+                if ($(this).attr("orderstatus") == "waitPay"){
+                    $(this).attr("style","display: table;");
+                }
+            });
+        }else if (type == "waitDelivery"){
+            $(".orderListItemTable").each(function () {
+                if ($(this).attr("orderstatus") == "waitDelivery"){
+                    $(this).attr("style","display: table;");
+                }
+            });
+        }else if (type == "waitConfirm"){
+            $(".orderListItemTable").each(function () {
+                if ($(this).attr("orderstatus") == "waitConfirm"){
+                    $(this).attr("style","display: table;");
+                }
+            });
+        }else if (type == "waitReview"){
+            $(".orderListItemTable").each(function () {
+                if ($(this).attr("orderstatus") == "waitReview"){
+                    $(this).attr("style","display: table;");
+                }
+            });
+        }else{
+            $(".orderListItemTable").each(function () {
+                $(this).attr("style","display: table;");
+            });
+        }
+
+    });
+
+    $(".orderItemStatus").click(function () {
+        var text = $(this).parents(".orderItemProductInfoPartTR").find(".orderListItemProductRealPrice").text();
+        var total = new Number(text.substr(1,text.length-1));
+        var oid = new Number();
+        oid = $(this).parents("table").attr("oid");
+        console.log(oid);
+        var text = $(this).attr("class");
+        var status = new Number();
+        console.log(text);
+        if (text.indexOf("orderListItemPay") != -1){
+            status = 0;
+            console.log(status);
+        }else if(text.indexOf("orderListItemSend") != -1){
+            status = 1;
+            console.log(status);
+        }else if(text.indexOf("orderListItemReceive") != -1){
+            status = 2;
+            console.log(status);
+        }else if(text.indexOf("orderListItemReview") != -1){
+            status = 3;
+            console.log(status);
+        }else {
+            alert("error!");
+        }
+        $.ajax({
+            url:"changeOrderStatus",
+            type:"post",
+            dataType:"json",
+            data:{oid:oid,total:total,status:status},
+            success:function (msg) {
+                if (msg == 0){
+                    window.location.href = "pay";
+                }else if (msg == 1){
+                    $(this).attr("class","orderItemStatus orderListItemReceive");
+                    $(this).text("确认收货");
+                    alert("卖家已光速发货，刷新页面即可确认收货！");
+                }else if (msg == 2){
+                    alert("你已确认收货，刷新即可评价本次购买")
+                    $(this).attr("class","orderItemStatus orderListItemReview");
+                    $(this).text("评价");
+                }else if (msg == 3){
+                    var text = prompt("添加你对本次购买或商品的评价");
+                    $.ajax({
+                        url:"addReviews",
+                        type:"post",
+                        data:{oid:oid,content:text},
+                        success:function (msg) {
+                            alert("成功对"+msg+"件商品进行评价");
+                            window.location.reload();
+                        }
+                    });
+                }else{
+                    alert("error");
+                }
+            }
+        });
+
+    });
+    // $("button.orderListItemPay").click(function () {
+    //     var oid = new Number();
+    //     oid = $(this).parents("table").attr("oid");
+    //     var text = $(this).parents(".orderItemProductInfoPartTR").find(".orderListItemProductRealPrice").text();
+    //     var price = new Number(text.substr(1,text.length-1));
+    //
+    //     $.ajax({
+    //         url:""
+    //     });
+    // });
+    
+    $(".deleteOrderLink").click(function () {
+        var oid = new Number($(this).attr("oid"));
+        $.ajax({
+            url:"deleteOreder",
+            data:{oid:oid},
+            success: function (msg) {
+                window.location.reload();
+            }
+        });
+    });
+
+});
+
+//评价
+$(function() {
+
 });
 
 //注销
@@ -231,7 +358,7 @@ $(document).ready(function(){
     $("#forelogout").click(function(){
         //通过ajax请求springmvc
         $.post(
-            "forelogout",//服务器地址
+            "/ssmproject/forelogout",//服务器地址
             function(result){
                 window.location.reload();
             }
@@ -251,7 +378,7 @@ $(document).ready(function(){
 
 });
 
-//删除订单
+//移除购物车
 $(document).ready(function(){
     $(".deleteOrderItem").click(function(){
         $.post(

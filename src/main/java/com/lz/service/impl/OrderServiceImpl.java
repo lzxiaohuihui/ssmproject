@@ -28,15 +28,19 @@ public class OrderServiceImpl implements OrderService {
     }
 
 
-
-    @Override
-    public void payed(int oid) {
-        orderMapper.payed(oid);
-    }
-
     @Override
     public List<Order_item> queryOrderItem(int oid) {
         return orderMapper.listOrderItem(oid);
+    }
+
+    @Override
+    public int queryOrderStatus(int oid) {
+        return orderMapper.queryStatus(oid);
+    }
+
+    @Override
+    public void changeOrderStatus(int oid, int status) {
+        orderMapper.setStatus(oid,status);
     }
 
 

@@ -3,7 +3,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-
 <div class="boughtDiv">
     <div class="orderType">
         <div class="selectedOrderType"><a href="#nowhere" orderstatus="all">所有订单</a></div>
@@ -30,7 +29,13 @@
 
 <c:forEach var="i" begin="0" end="${requestScope;orders.size()-1}" >
 
-        <table oid="946" orderstatus="waitReview" class="orderListItemTable" style="display: table;">
+        <table oid="${requestScope;(orders.get(orders.size()-1-i)).oid}" orderstatus=<c:choose>
+        <c:when test="${(orders.get(orders.size()-1-i)).status == 0}">waitPay</c:when>
+        <c:when test="${(orders.get(orders.size()-1-i)).status == 1}">waitDelivery</c:when>
+        <c:when test="${(orders.get(orders.size()-1-i)).status == 2}">waitConfirm</c:when>
+        <c:when test="${(orders.get(orders.size()-1-i)).status == 3}">waitReview</c:when>
+        <c:otherwise>other</c:otherwise>
+        </c:choose> class="orderListItemTable" style="display: table;">
             <tbody><tr class="orderListItemFirstTR">
                 <td colspan="2">
                     <b>${requestScope;(orders.get(orders.size()-1-i)).getDate()}</b>
@@ -79,9 +84,33 @@
                     <div class="orderListItemPriceWithTransport">(含运费：￥0.00)</div>
                 </td>
                 <td width="100px" valign="top" class="orderListItemButtonTD orderItemOrderInfoPartTD" rowspan="${orderItems.size()}">
-                    <a href="#nowhere">
-                        <button class="orderListItemReview">评价</button>
-                    </a>
+                    <c:choose>
+                        <c:when test="${(orders.get(orders.size()-1-i)).status == 0}">
+                            <a href="#nowhere">
+                                <button class="orderItemStatus orderListItemPay">去付款</button>
+                            </a>
+                        </c:when>
+                        <c:when test="${(orders.get(orders.size()-1-i)).status == 1}">
+                            <a href="#nowhere">
+                                <button class="orderItemStatus orderListItemSend">催发货</button>
+                            </a>
+                        </c:when>
+                        <c:when test="${(orders.get(orders.size()-1-i)).status == 2}">
+                            <a href="#nowhere">
+                                <button class="orderItemStatus orderListItemReceive">确认收货</button>
+                            </a>
+                        </c:when>
+                        <c:when test="${(orders.get(orders.size()-1-i)).status == 3}">
+                            <a href="#nowhere">
+                                <button class="orderItemStatus orderListItemReview">评价</button>
+                            </a>
+                        </c:when>
+                        <c:otherwise>
+                            <a href="#nowhere">
+                            </a>
+                        </c:otherwise>
+                    </c:choose>
+
                 </td>
             </tr>
             </c:forEach>

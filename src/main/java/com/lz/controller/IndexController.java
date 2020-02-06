@@ -160,8 +160,16 @@ public class IndexController {
         return "pay";
     }
 
+    @RequestMapping("/pay")
+    public String pay(){
+        return "pay";
+    }
+
     @RequestMapping("/payed")
-    public String payed(@RequestParam("total") String total, Map<String, Object> map){
+    public String payed(HttpSession session, Map<String, Object> map){
+        int oid = (int) session.getAttribute("oid");
+        int total = (int) session.getAttribute("total");
+        orderService.changeOrderStatus(oid,1);
         map.put("total",total);
         return "payed";
     }
@@ -181,6 +189,43 @@ public class IndexController {
 
         return "order";
     }
+    @ResponseBody
+    @RequestMapping(value = "/changeOrderStatus")
+    public int changeOrderStatus(int oid, int total, int status, HttpSession session) {
+        if (status == 0) {
+            session.setAttribute("oid", oid);
+            session.setAttribute("total", total);
+            return 0;
+        } else if (status == 3) {
+            return 3;
+        } else{
+            orderService.changeOrderStatus(oid, status + 1);
+            return status;
+        }
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/deleteOreder")
+    public void deleteOrder(int oid){
+        orderService.deleteOrder(oid);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "addReviews")
+    public int addReviews(int oid, String content, HttpSession session){
+        User user = (User) session.getAttribute("user");
+        List<Product> products = orderService.queryOrderProduct(oid);
+        Date date = new Date();
+        Timestamp timestamp = new Timestamp(date.getTime());
+        Review review ;
+        for (Product p: products){
+            review = new Review(p.getPid(),user.getUsername(), content, timestamp);
+            reviewService.addReviewByPid(review);
+        }
+        orderService.changeOrderStatus(oid,4);
+        return products.size();
+    }
+
     @RequestMapping("testUpload")
     public String upload(@RequestParam("desc") String desc, @RequestParam("file")MultipartFile file) throws IOException {
         System.out.println(desc);

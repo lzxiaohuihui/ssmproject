@@ -12,6 +12,15 @@ public class Order {
     private String receiver;
     private long mobile;
     private float price;
+    private int status;
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
 
     public float getPrice() {
         return price;
@@ -19,16 +28,6 @@ public class Order {
     public void setPrice(float price) {
         this.price = price;
     }
-
-    public int getIspay() {
-        return ispay;
-    }
-
-    public void setIspay(int ispay) {
-        this.ispay = ispay;
-    }
-
-    private int ispay;
 
 
     public Order(String address, int post, String receiver, long mobile) {
@@ -65,6 +64,18 @@ public class Order {
         this.mobile = mobile;
     }
 
+    public Order(int uid, int oid, Timestamp date, long no, String address, int post, String receiver, long mobile, float price, int status) {
+        this.uid = uid;
+        this.oid = oid;
+        this.date = date;
+        this.no = no;
+        this.address = address;
+        this.post = post;
+        this.receiver = receiver;
+        this.mobile = mobile;
+        this.price = price;
+        this.status = status;
+    }
 
     public Order() {
     }

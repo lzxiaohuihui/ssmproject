@@ -10,7 +10,7 @@
 	<div>
 		<span class="confirmMoneyText">扫一扫付款（元）</span>
 		<span class="confirmMoney">
-		￥${requestScope.price}</span>
+		￥${total}</span>
 		
 	</div>
 	<div>
@@ -19,7 +19,7 @@
 
 	
 	<div>
-		<a href="${pageContext.request.contextPath}/payed/${requestScope.price}"><button class="confirmPay">确认支付</button></a>
+		<a href="${pageContext.request.contextPath}/payed/"><button class="confirmPay">确认支付</button></a>
 	</div>
 
 </div>
