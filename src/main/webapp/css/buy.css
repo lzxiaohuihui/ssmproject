@@ -263,7 +263,7 @@ div.orderItemTotalSumDiv span {
 
 span.orderItemTotalSumSpan {
     color: #C40000 !important;
-    font-size: 24px;
+    font-size: 24px !important;
     font-weight: bold;
     border-bottom: 1px dotted #F2F6FF;
 }

@@ -29,4 +29,16 @@ public class ProductServiceImpl implements ProductService {
         return productMapper.get(pid);
     }
 
+    @Override
+    public void addReview(int pid) {
+        int reviewNum = productMapper.queryProductReviewNum(pid);
+        productMapper.addReview(pid,reviewNum+1);
+    }
+
+    @Override
+    public void sale(int pid, int saleNum) {
+        saleNum += productMapper.queryProductReviewNum(pid);
+        productMapper.sale(pid, saleNum);
+    }
+
 }

@@ -156,7 +156,12 @@ public class IndexController {
         order.setNo(no);
         order.setPrice(total);
         orderService.addOrder(order, pid, quantity);
-        map.put("price", total);
+        map.put("total", total);
+
+        //移除购物车
+        for (int i=0; i<products.size(); i++){
+            cartService.deleteCart(uid, pid[i]);
+        }
         return "pay";
     }
 
@@ -170,6 +175,10 @@ public class IndexController {
         int oid = (int) session.getAttribute("oid");
         int total = (int) session.getAttribute("total");
         orderService.changeOrderStatus(oid,1);
+        List<Order_item> order_items = orderService.queryOrderItem(oid);
+        for (Order_item oi: order_items){
+            productService.sale(oi.getProduct().getPid(), oi.getQuantity());
+        }
         map.put("total",total);
         return "payed";
     }
@@ -221,6 +230,7 @@ public class IndexController {
         for (Product p: products){
             review = new Review(p.getPid(),user.getUsername(), content, timestamp);
             reviewService.addReviewByPid(review);
+            productService.addReview(p.getPid());
         }
         orderService.changeOrderStatus(oid,4);
         return products.size();

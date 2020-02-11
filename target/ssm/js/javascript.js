@@ -347,7 +347,18 @@ $(function(){
     });
 
 });
-
+//购买页面
+$(function () {
+    var orderPriceSum = new Number();
+    var orderItemUnitSum = $(".orderItemUnitSum");
+    for (var i=0; i<orderItemUnitSum.length; i++){
+        var text = (orderItemUnitSum.get(i)).innerHTML;
+        var price = new Number(text.substr(1,text.length-1));
+        orderPriceSum += price;
+    }
+    $(".storePrice").text("￥ "+orderPriceSum);
+    $(".orderItemTotalSumSpan").text("￥ "+orderPriceSum);
+});
 //评价
 $(function() {
 

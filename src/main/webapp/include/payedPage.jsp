@@ -20,7 +20,7 @@
 		<div class="paedCheckLinkDiv">
 			您可以
 			<a class="payedCheckLink" href="${pageContext.request.contextPath}/order">查看已买到的宝贝</a>
-			<a class="payedCheckLink" href="">查看交易详情 </a>
+			<a class="payedCheckLink" href="#nowhere">查看交易详情 </a>
 		</div>
 			
 	</div>

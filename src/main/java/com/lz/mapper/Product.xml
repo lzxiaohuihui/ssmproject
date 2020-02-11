@@ -20,4 +20,16 @@
     <select id="list" resultType="com.lz.entity.Product">
         select * from product
     </select>
+    <update id="addReview" parameterType="int">
+        update product set reviews=#{reviewNum} where pid = #{pid}
+    </update>
+    <select id="queryProductReviewNum" parameterType="int" resultType="int">
+        select reviews from product where pid = #{pid}
+    </select>
+    <update id="sale" parameterType="int">
+        update product set sales = #{saleNum} where pid = #{pid}
+    </update>
+    <select id="queryProductSales" parameterType="int" resultType="int">
+        select sales from product where pid = #{pid}
+    </select>
 </mapper>
