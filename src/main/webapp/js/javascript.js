@@ -1,3 +1,49 @@
+//注册时候校验名字
+$(function(){
+    $("#userName,#userPwd").keyup(function () {
+
+        var username = $("#userName").val();
+        var password = $("#userPwd").val();
+        var flag1 = false;
+        var flag2 = false;
+        if(/^[a-zA-Z_-][a-zA-Z0-9_-]{2,16}$/.test(username)){
+            flag1 = true;
+        }else{
+            flag2 = false;
+            $("#tip").text("该会员名不合法");
+            $("#sub").attr("disable","disabled");
+        }
+        if(/^[a-zA-Z_-][a-zA-Z0-9_-]{5,18}$/.test(password)){
+            flag2 = true;
+        }
+        else {
+            flag2 = false;
+            $("#sub").attr("disabled","disabled");
+        }
+
+        if (flag1 && flag2){
+            $("#sub").removeAttr("disabled");
+        }else{
+
+        }
+        $.ajax({
+            url:"checkName",
+            type:"post",
+            dataType:"json",
+            data:{username:username},
+            success:function (res) {
+                if (res == "1") {
+                    if (flag1){
+                        $("#tip").text("该会员名可用");
+                    }
+                } else {
+                    $("#tip").text("该会员名重复");
+                }
+            }
+        });
+    });
+});
+
 //item 页面的大图
 $(function(){
     $("img.smallImg").mouseenter(function(){

@@ -8,6 +8,7 @@ div.login{
     height: 300px;
     margin-left: 60%;
     margin-top: 10%;
+    border-radius: 10px;
 
     padding: 20px;
 }
@@ -30,4 +31,14 @@ a{
 }
 a:hover{
     text-decoration: none;
+}
+#sub{
+    margin-top: 10px;
+}
+input::placeholder {
+    color: #e7e7e7;
+    font-size: 12px;
+}
+.error{
+    border: 1px solid red;
 }

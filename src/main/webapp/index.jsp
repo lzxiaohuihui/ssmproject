@@ -19,7 +19,7 @@
   <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
   <script src="${pageContext.request.contextPath}/js/javascript.js"></script>
 
-
+  <link rel="icon" href="${pageContext.request.contextPath}/img/ico/favicon.ico" mce_href="${pageContext.request.contextPath}/img/ico/favicon.ico" type="image/x-icon" />
   <title>天狗</title>
 </head>
 <body>

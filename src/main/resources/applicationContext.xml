@@ -20,14 +20,14 @@
 	      <value>com.mysql.jdbc.Driver</value>  
 	  </property>  
 	  <property name="url">  
-	      <value>jdbc:mysql://localhost:3306/ssm?characterEncoding=UTF-8</value>
+	      <value>jdbc:mysql://39.96.92.100:3306/ssm?characterEncoding=UTF-8</value>
 	
 	  </property>  
 	  <property name="username">  
 	      <value>root</value>  
 	  </property>  
 	  <property name="password">  
-	      <value>123456</value>
+	      <value>admin</value>
 	  </property>  	
 	</bean>
 	

@@ -18,6 +18,7 @@
     <script src="${pageContext.request.contextPath}/js/bootstrap/3.3.6/bootstrap.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/javascript.js"></script>
     <title>${product.name}</title>
+    <link rel="icon" href="${pageContext.request.contextPath}/img/ico/favicon.ico" mce_href="${pageContext.request.contextPath}/img/ico/favicon.ico" type="image/x-icon" />
 
 </head>
 <body style="min-width: 1400px">

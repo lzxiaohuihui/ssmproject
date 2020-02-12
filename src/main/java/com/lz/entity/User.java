@@ -4,6 +4,14 @@ public class User {
     private int uid;
     private String username;
     private String pwd;
+    private int admin;
+
+    public User(int uid, String username, String pwd, int admin) {
+        this.uid = uid;
+        this.username = username;
+        this.pwd = pwd;
+        this.admin = admin;
+    }
 
     public User(int uid, String username, String pwd) {
         this.uid = uid;

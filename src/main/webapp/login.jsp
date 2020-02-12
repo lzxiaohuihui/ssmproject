@@ -7,6 +7,7 @@
     <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js" charset="utf-8"></script>
     <link href="${pageContext.request.contextPath}/css/login.css" rel="stylesheet"/>
     <title>login</title>
+    <link rel="icon" href="${pageContext.request.contextPath}/img/ico/favicon.ico" mce_href="${pageContext.request.contextPath}/img/ico/favicon.ico" type="image/x-icon" />
 
 </head>
 <body>
@@ -27,7 +28,7 @@
         <input class="logbtn" type="submit" value="login">
         
         <div class="bottom-text">
-            don't have account?<a href="register.jsp">sign up</a>
+            don't have account?<a href="${pageContext.request.contextPath}/register">sign up</a>
         </div>
     </form>
 

@@ -24,6 +24,9 @@ public class MyInterceptor implements HandlerInterceptor {
         else if(uri.contains("/register")){
             return true;
         }
+        else if(uri.contains("/checkName")){
+            return true;
+        }
 
         HttpSession session = httpServletRequest.getSession();
         User user = (User) session.getAttribute("user");

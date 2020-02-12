@@ -9,8 +9,12 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
+import java.util.Map;
 
 @RequestMapping("")
 @Controller
@@ -40,13 +44,11 @@ public class LoginController {
     }
 
     @RequestMapping(value="/login", method= {RequestMethod.POST})
-    public String checkUser(@RequestParam("username") String username, @RequestParam("pwd") String pwd, HttpSession session) {
-        User tempUser = new User(username,pwd);
-        int uid = userService.getUid(tempUser.getUsername());
-        tempUser.setUid(uid);
-        if(userService.isUser(tempUser)){
-            session.setAttribute("user",tempUser);
-            List<Product> cart = cartService.getCartProducts(uid);
+    public String checkUser(User user, HttpSession session, HttpServletResponse response) {
+        if(userService.isUser(user)){
+            user.setUid(userService.getUid(user.getUsername()));
+            session.setAttribute("user",user);
+            List<Product> cart = cartService.getCartProducts(user.getUid());
             session.setAttribute("cart", cart);
             return "redirect:index";
         }
@@ -60,8 +62,8 @@ public class LoginController {
     }
 
     @ResponseBody
-    @RequestMapping("/checkName")
-    public String checkName(@RequestParam("username") String username ){
+    @RequestMapping(value = "/checkName", method = RequestMethod.POST)
+    public String checkName(String username ){
         if(userService.checkName(username)) {
             return "1";
         }
